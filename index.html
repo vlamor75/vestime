@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vestime - Camisetas únicas para hombre y mujer. Diseños exclusivos, precios económicos. ¡Compra por WhatsApp!">
+    <meta name="keywords" content="camisetas, ropa, moda, económico, diseños únicos, WhatsApp">
+
+    <!-- Open Graph para compartir en redes -->
+    <meta property="og:title" content="Vestime - Camisetas Únicas y Económicas">
+    <meta property="og:description" content="Descubre diseños exclusivos que no se repiten. ¡Compra fácil por WhatsApp!">
+    <meta property="og:image" content="./images/og-image.jpg">
+    <meta property="og:url" content="https://vestime.vercel.app">
+
+    <title>Vestime - Camisetas Únicas para Hombre y Mujer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- === HEADER === -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">VESTIME.CO</a>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="index.html" class="active">Inicio</a></li>
+                        <li><a href="catalogo.html">Catálogo</a></li>
+                        <li><a href="#como-funciona">Cómo Funciona</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- === HERO SECTION === -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>🔥 Camisetas Únicas que NO Se Repiten</h1>
+                <p>Diseños exclusivos para hombre y mujer. Cada modelo es único. Precios que te sorprenderán.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+                    <a href="catalogo.html" class="btn btn-white btn-lg">
+                        <i class="fas fa-shopping-bag"></i> Ver Catálogo
+                    </a>
+                    <a href="#" class="btn btn-secondary btn-lg" data-whatsapp data-mensaje="Hola! Quiero información sobre las camisetas únicas 👕">
+                        <i class="fab fa-whatsapp"></i> Comprar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === CARACTERÍSTICAS PRINCIPALES === -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Por qué elegir Vestime?</h2>
+            </div>
+
+            <div class="products-grid" style="max-width: 900px; margin: 2rem auto;">
+                <!-- Feature 1 -->
+                <div class="product-card" style="text-align: center; padding: 2rem 1rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🎨</div>
+                    <h3 style="font-size: 1.25rem;">Diseños Únicos</h3>
+                    <p style="color: var(--gray);">Cada camiseta es exclusiva. No encontrarás dos iguales.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="product-card" style="text-align: center; padding: 2rem 1rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                    <h3 style="font-size: 1.25rem;">Precios Económicos</h3>
+                    <p style="color: var(--gray);">Calidad premium sin romper tu bolsillo.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="product-card" style="text-align: center; padding: 2rem 1rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3 style="font-size: 1.25rem;">Compra Fácil</h3>
+                    <p style="color: var(--gray);">Un clic en WhatsApp y listo. Sin complicaciones.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- === PRODUCTOS DESTACADOS === -->
+    <section class="section" style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Productos Destacados</h2>
+                <p style="color: var(--gray); margin-top: 1rem;">Los más populares esta semana</p>
+            </div>
+
+            <div class="products-grid" id="productos-destacados">
+                <!-- Los productos se cargarán aquí dinámicamente o desde HTML -->
+                <!-- Producto Ejemplo 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge unico">ÚNICO</span>
+                        <img src="https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Camiseta+1" alt="Camiseta Diseño 1" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camiseta Estampada #001</h3>
+                        <div class="product-price">
+                            $35.000
+                        </div>
+                        <a href="#" class="btn btn-primary btn-block" data-whatsapp data-mensaje="Hola! Me interesa la Camiseta Estampada #001 👕">
+                            <i class="fab fa-whatsapp"></i> Comprar Ahora
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Producto Ejemplo 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge unico">ÚNICO</span>
+                        <img src="https://via.placeholder.com/400x400/4ECDC4/FFFFFF?text=Camiseta+2" alt="Camiseta Diseño 2" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camiseta Oversize #002</h3>
+                        <div class="product-price">
+                            $38.000
+                        </div>
+                        <a href="#" class="btn btn-primary btn-block" data-whatsapp data-mensaje="Hola! Me interesa la Camiseta Oversize #002 👕">
+                            <i class="fab fa-whatsapp"></i> Comprar Ahora
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Producto Ejemplo 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge unico">ÚNICO</span>
+                        <img src="https://via.placeholder.com/400x400/FFE66D/2C3E50?text=Camiseta+3" alt="Camiseta Diseño 3" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camiseta Vintage #003</h3>
+                        <div class="product-price">
+                            $32.000
+                        </div>
+                        <a href="#" class="btn btn-primary btn-block" data-whatsapp data-mensaje="Hola! Me interesa la Camiseta Vintage #003 👕">
+                            <i class="fab fa-whatsapp"></i> Comprar Ahora
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Producto Ejemplo 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">POCAS</span>
+                        <img src="https://via.placeholder.com/400x400/E85555/FFFFFF?text=Camiseta+4" alt="Camiseta Diseño 4" loading="lazy">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Camiseta Gráfica #004</h3>
+                        <div class="product-price">
+                            $36.000
+                        </div>
+                        <a href="#" class="btn btn-primary btn-block" data-whatsapp data-mensaje="Hola! Me interesa la Camiseta Gráfica #004 👕">
+                            <i class="fab fa-whatsapp"></i> Comprar Ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="catalogo.html" class="btn btn-secondary btn-lg">
+                    Ver Todo el Catálogo <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- === CÓMO FUNCIONA === -->
+    <section class="section" id="como-funciona">
+        <div class="container">
+            <div class="section-title">
+                <h2>Comprar es Súper Fácil</h2>
+            </div>
+
+            <div class="products-grid" style="max-width: 1000px; margin: 2rem auto;">
+                <!-- Paso 1 -->
+                <div style="text-align: center; padding: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: var(--gradient-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1rem;">1</div>
+                    <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Elige tu camiseta</h3>
+                    <p style="color: var(--gray);">Explora el catálogo y encuentra tu diseño favorito</p>
+                </div>
+
+                <!-- Paso 2 -->
+                <div style="text-align: center; padding: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: var(--gradient-secondary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1rem;">2</div>
+                    <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">Haz clic en WhatsApp</h3>
+                    <p style="color: var(--gray);">Te conectarás directamente con nosotros</p>
+                </div>
+
+                <!-- Paso 3 -->
+                <div style="text-align: center; padding: 1.5rem;">
+                    <div style="width: 60px; height: 60px; background: var(--gradient-dark); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin: 0 auto 1rem;">3</div>
+                    <h3 style="font-size: 1.125rem; margin-bottom: 0.5rem;">¡Recibe en casa!</h3>
+                    <p style="color: var(--gray);">Confirmamos tu pedido y te lo enviamos</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="#" class="btn btn-primary btn-lg" data-whatsapp data-mensaje="Hola! Quiero hacer mi primer pedido 🎉">
+                    <i class="fab fa-whatsapp"></i> Hacer Mi Primer Pedido
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- === CTA FINAL === -->
+    <section class="section" style="background: var(--gradient-primary); color: white; text-align: center;">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;">¿Listo para verte increíble?</h2>
+            <p style="font-size: 1.125rem; margin-bottom: 2rem; opacity: 0.95;">Únete a cientos de personas que ya encontraron su estilo único</p>
+            <a href="catalogo.html" class="btn btn-white btn-lg">
+                Explorar Catálogo Completo
+            </a>
+        </div>
+    </section>
+
+    <!-- === FOOTER === -->
+    <footer class="footer" id="contacto">
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo" style="font-size: 2rem; margin-bottom: 1rem; color: white;">
+                    VESTIME.CO
+                </div>
+                <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+                    Camisetas únicas y económicas para expresar tu estilo.
+                </p>
+
+                <div class="social-links">
+                    <a href="https://instagram.com/vestime.co" target="_blank" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://facebook.com/vestime.co" target="_blank" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://tiktok.com/@vestime.co" target="_blank" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    <a href="#" data-whatsapp data-mensaje="Hola! Tengo una consulta" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); opacity: 0.8; font-size: 0.875rem;">
+                    <p>© 2025 Vestime.co - Todos los derechos reservados</p>
+                    <p style="margin-top: 0.5rem;">Hecho con ❤️ en Colombia</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- === BOTÓN FLOTANTE DE WHATSAPP === -->
+    <a href="#" class="whatsapp-float" data-whatsapp data-mensaje="Hola! Tengo una consulta sobre las camisetas 👕" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- === SCRIPTS === -->
+    <!-- Cargar en orden: Config → Sheets API → Referidos -->
+    <script src="./js/config.js"></script>
+    <script src="./js/sheets-api.js"></script>
+    <script src="./js/referidos.js"></script>
+
+    <!-- Script para header sticky -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>
