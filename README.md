@@ -247,3 +247,4 @@ location.reload();
 
 **Versión:** 1.0
 **Última actualización:** Noviembre 2025
+
