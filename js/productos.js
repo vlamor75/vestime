@@ -73,6 +73,19 @@ class ProductosManager {
         const badgeHTML = `
                     <span class="product-badge ${isAgotado ? 'agotado' : 'unico'}">${isAgotado ? 'AGOTADO' : 'ÚNICO'}</span>`;
 
+        const buttonHTML = isAgotado
+            ? `
+                    <span class="btn btn-disabled btn-block" aria-disabled="true">
+                        <i class="fas fa-ban"></i> No disponible
+                    </span>`
+            : `
+                    <a href="#"
+                       class="btn btn-primary btn-block"
+                       data-whatsapp
+                       data-mensaje="Hola! Me interesa ${producto.nombre}. ¿Cuál es el precio y disponibilidad? 👕">
+                        <i class="fab fa-whatsapp"></i> Consultar Precio
+                    </a>`;
+
         return `
             <div class="${cardClasses.join(' ')}" data-category="${producto.categoria}" data-producto-id="${producto.id}">
                 <div class="product-image">
@@ -90,12 +103,7 @@ class ProductosManager {
                     <p class="product-description" style="color: var(--gray); font-size: 0.875rem; margin-bottom: 1rem;">
                         ${producto.descripcion}
                     </p>
-                    <a href="#"
-                       class="btn btn-primary btn-block"
-                       data-whatsapp
-                       data-mensaje="Hola! Me interesa ${producto.nombre}. ¿Cuál es el precio y disponibilidad? 👕">
-                        <i class="fab fa-whatsapp"></i> Consultar Precio
-                    </a>
+                    ${buttonHTML}
                 </div>
             </div>
         `;

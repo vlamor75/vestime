@@ -277,6 +277,13 @@ p {
     color: var(--primary);
 }
 
+.btn-disabled {
+    background: var(--light-gray);
+    color: var(--gray);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
 .btn-lg {
     padding: 1.25rem 2.5rem;
     font-size: 1.125rem;
@@ -343,6 +350,10 @@ p {
     inset: 0;
     background: rgba(0, 0, 0, 0.4);
     z-index: 5;
+}
+
+.product-card.agotado .product-image img {
+    filter: grayscale(100%);
 }
 
 .product-card:hover {
