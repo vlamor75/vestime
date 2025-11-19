@@ -62,10 +62,21 @@ class ProductosManager {
         const imagenURL = this.getImagenURL(producto);
         const categoriaDisplay = this.categorias[producto.categoria] || producto.categoria;
 
+        const estado = (producto.estado || '').toLowerCase();
+        const isAgotado = estado === 'agotado';
+        const cardClasses = ['product-card'];
+
+        if (isAgotado) {
+            cardClasses.push('agotado');
+        }
+
+        const badgeHTML = `
+                    <span class="product-badge ${isAgotado ? 'agotado' : 'unico'}">${isAgotado ? 'AGOTADO' : 'ÚNICO'}</span>`;
+
         return `
-            <div class="product-card" data-category="${producto.categoria}" data-producto-id="${producto.id}">
+            <div class="${cardClasses.join(' ')}" data-category="${producto.categoria}" data-producto-id="${producto.id}">
                 <div class="product-image">
-                    <span class="product-badge unico">ÚNICO</span>
+                    ${badgeHTML}
                     <img src="${imagenURL}"
                          alt="${producto.nombre}"
                          loading="lazy"
