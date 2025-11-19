@@ -15,5 +15,8 @@ const CONFIG = {
     REFERIDO_EXPIRY_DAYS: 7,
 
     // Mensaje predeterminado para WhatsApp
-    MENSAJE_DEFAULT: 'Hola! Me interesa información sobre sus camisetas 👕'
+    MENSAJE_DEFAULT: 'Hola! Me interesa información sobre sus camisetas 👕',
+
+    // Base opcional para servir imágenes desde GitHub (raw). Dejar vacío para usar archivos locales.
+    IMAGES_BASE_URL: 'https://raw.githubusercontent.com/vlamor75/vestime/main'
 };

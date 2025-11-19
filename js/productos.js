@@ -29,21 +29,37 @@ class ProductosManager {
     }
 
     /**
-     * Genera la URL de imagen desde Google Drive
+     * Obtiene la mejor URL disponible para la imagen del producto
+     * Prioriza rutas locales (deploy en Vercel) y cae a IDs de Drive
      */
-    getImagenURL(driveId) {
-        if (!driveId || driveId === 'REEMPLAZAR_CON_ID') {
-            // Placeholder si no hay imagen
-            return 'https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Vestime';
+    getImagenURL(producto) {
+        const imagenPath = producto.imagen && producto.imagen.trim();
+        const driveId = producto.imagen_drive_id && producto.imagen_drive_id.trim();
+        const baseURL = (CONFIG.IMAGES_BASE_URL || '').trim();
+
+        if (imagenPath) {
+            const isAbsolute = imagenPath.startsWith('http://') || imagenPath.startsWith('https://');
+            if (isAbsolute || !baseURL) {
+                return imagenPath;
+            }
+
+            const normalizedPath = imagenPath.startsWith('/') ? imagenPath : `/${imagenPath}`;
+            return `${baseURL}${normalizedPath}`;
         }
-        return `https://drive.google.com/uc?export=view&id=${driveId}`;
+
+        if (driveId && driveId !== 'REEMPLAZAR_CON_ID') {
+            return `https://drive.google.com/uc?export=view&id=${driveId}`;
+        }
+
+        // Placeholder si no hay referencia válida
+        return 'https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Vestime';
     }
 
     /**
      * Genera el HTML de una tarjeta de producto (SIN PRECIO)
      */
     generarProductoHTML(producto) {
-        const imagenURL = this.getImagenURL(producto.imagen_drive_id);
+        const imagenURL = this.getImagenURL(producto);
         const categoriaDisplay = this.categorias[producto.categoria] || producto.categoria;
 
         return `
