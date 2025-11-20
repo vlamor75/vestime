@@ -77,23 +77,20 @@ class ProductosManager {
                         Talla ${producto.talla}
                     </div>` : '';
 
-        const sizeChip = producto.talla ? `
-                    <div class="product-size-chip">
-                        Talla ${producto.talla}
-                        ${producto.sexo ? `<small>${producto.sexo}</small>` : ''}
-                    </div>` : '';
-
         const measurements = tallaInfo ? [
             { label: 'Hombro', value: tallaInfo.hombro },
             { label: 'Pecho', value: tallaInfo.pecho },
             { label: 'Manga', value: tallaInfo.manga },
             { label: 'Largo', value: tallaInfo.largo }
         ].map(item => `
-                        <div><span>${item.label}:</span> ${item.value || '-'} cm</div>`).join('') : '';
+                            <span>${item.label}: ${item.value || '-'} cm</span>`).join('') : '';
 
-        const sizeBlockHTML = (sizeChip || measurements) ? `
+        const sizeBlockHTML = (producto.talla || measurements) ? `
                     <div class="product-size-block">
-                        ${sizeChip}
+                        <p class="product-size-line">
+                            ${producto.talla ? `Talla ${producto.talla}` : 'Medidas'}
+                            ${producto.sexo ? `<small>${producto.sexo}</small>` : ''}
+                        </p>
                         ${measurements ? `<div class="product-measurements">${measurements}</div>` : ''}
                     </div>` : '';
 
