@@ -366,7 +366,6 @@ p {
     overflow: hidden;
     aspect-ratio: 1;
     background: var(--light-gray);
-    cursor: zoom-in;
 }
 
 .product-image img {
@@ -375,6 +374,7 @@ p {
     object-fit: cover;
     transition: var(--transition-slow);
 }
+
 
 .size-badge {
     position: absolute;
@@ -389,40 +389,6 @@ p {
     line-height: 1.2;
     z-index: 15;
     backdrop-filter: blur(4px);
-    max-width: 75%;
-}
-
-.size-badge small {
-    display: block;
-    font-weight: 400;
-    font-size: 0.7rem;
-    color: rgba(255,255,255,0.85);
-    margin-top: 2px;
-    white-space: normal;
-}
-
-.image-zoom-btn {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(0,0,0,0.6);
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 16;
-    transition: var(--transition-fast);
-    backdrop-filter: blur(4px);
-}
-
-.image-zoom-btn:hover,
-.image-zoom-btn:focus-visible {
-    background: rgba(0,0,0,0.85);
 }
 
 .product-card:hover .product-image img {
@@ -464,11 +430,6 @@ p {
     color: var(--primary-dark);
 }
 
-.product-size span {
-    color: var(--dark);
-    font-weight: 500;
-}
-
 .product-name {
     font-size: 1.125rem;
     font-weight: 700;
@@ -488,6 +449,180 @@ p {
     color: var(--gray);
     font-weight: 400;
     text-decoration: line-through;
+}
+
+/* === GUÍA DE TALLAS === */
+
+.size-guide-section {
+    background: var(--light-gray);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.size-guide-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.size-guide-header p {
+    color: var(--gray);
+    margin-bottom: 0;
+}
+
+.size-guide-diagram {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.diagram-card {
+    background: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm);
+    box-shadow: var(--shadow-sm);
+}
+
+.diagram-card svg {
+    width: 100%;
+    height: auto;
+}
+
+.diagram-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.diagram-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+}
+
+.diagram-item span {
+    font-weight: 700;
+    color: var(--primary);
+    min-width: 70px;
+}
+
+.diagram-item p {
+    margin-bottom: 0;
+    color: var(--gray);
+}
+
+.size-guide-cta {
+    text-align: center;
+}
+
+.size-guide-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-slow);
+    z-index: 2100;
+    padding: var(--spacing-sm);
+}
+
+.size-guide-modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.size-guide-modal__content {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    max-width: min(95vw, 900px);
+    width: 100%;
+    padding: var(--spacing-md);
+    position: relative;
+    box-shadow: var(--shadow-xl);
+}
+
+.size-guide-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: transparent;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+}
+
+.size-guide-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: var(--spacing-sm);
+}
+
+.size-guide-tabs button {
+    border: 1px solid var(--light-gray);
+    background: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.size-guide-tabs button.active {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+}
+
+.size-guide-table-wrapper {
+    overflow-x: auto;
+    margin-top: var(--spacing-sm);
+}
+
+.size-guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.size-guide-table thead {
+    background: var(--light-gray);
+}
+
+.size-guide-table th,
+.size-guide-table td {
+    padding: 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.size-guide-table th {
+    font-weight: 700;
+    color: var(--dark);
+}
+
+.size-guide-table td:first-child,
+.size-guide-table th:first-child {
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .size-guide-section {
+        padding: var(--spacing-md);
+    }
+
+    .size-guide-header h2 {
+        font-size: 1.5rem;
+    }
 }
 
 /* === MODAL DE IMAGEN === */

@@ -194,6 +194,8 @@ class SheetsAPI {
 
             const key = this.getTallaKey(sexo, talla);
             tallas[key] = {
+                sexo,
+                talla,
                 hombro: this.getCellValue(row.c[2]),
                 pecho: this.getCellValue(row.c[3]),
                 manga: this.getCellValue(row.c[4]),

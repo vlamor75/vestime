@@ -203,6 +203,31 @@ class ProductosManager {
         return this.tallas[key];
     }
 
+    getTallasAgrupadas() {
+        const agrupadas = {};
+        Object.values(this.tallas || {}).forEach(info => {
+            if (!info) return;
+            const sexoKey = (info.sexo || '').toLowerCase().includes('mujer') ? 'mujer' : 'hombre';
+            if (!agrupadas[sexoKey]) {
+                agrupadas[sexoKey] = [];
+            }
+
+            agrupadas[sexoKey].push({
+                talla: info.talla || '-',
+                hombro: info.hombro || '-',
+                pecho: info.pecho || '-',
+                manga: info.manga || '-',
+                largo: info.largo || '-'
+            });
+        });
+
+        Object.values(agrupadas).forEach(lista => {
+            lista.sort((a, b) => a.talla.localeCompare(b.talla, 'es', { numeric: true, sensitivity: 'base' }));
+        });
+
+        return agrupadas;
+    }
+
     inicializarZoom() {
         if (!this.modal) {
             this.modal = this.crearModalImagen();
