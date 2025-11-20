@@ -75,8 +75,16 @@ class ProductosManager {
         const tallaBadge = producto.talla ? `
                     <div class="size-badge">
                         Talla ${producto.talla}
-                        ${tallaInfo ? `<small>${producto.sexo}</small>` : ''}
+                        ${producto.sexo ? `<small>${producto.sexo}</small>` : ''}
                     </div>` : '';
+        const medidasHTML = tallaInfo ? `
+                    <p class="product-size">
+                        Medidas:
+                        <span>Hombro ${tallaInfo.hombro || '?'} cm</span> ·
+                        <span>Pecho ${tallaInfo.pecho || '?'} cm</span> ·
+                        <span>Manga ${tallaInfo.manga || '?'} cm</span> ·
+                        <span>Largo ${tallaInfo.largo || '?'} cm</span>
+                    </p>` : '';
 
         const estado = (producto.estado || '').toLowerCase();
         const isAgotado = estado === 'agotado';
@@ -103,7 +111,7 @@ class ProductosManager {
                     </a>`;
 
         return `
-            <div class="${cardClasses.join(' ')}" data-category="${producto.categoria}" data-producto-id="${producto.id}">
+            <div class="${cardClasses.join(' ')}" data-category="${producto.categoria}" data-producto-id="${producto.id}" data-zoom-target="${imagenURL}">
                 <div class="product-image">
                     ${tallaBadge}
                     ${badgeHTML}
@@ -121,9 +129,7 @@ class ProductosManager {
                     <p class="product-description" style="color: var(--gray); font-size: 0.875rem; margin-bottom: 0.5rem;">
                         ${producto.descripcion}
                     </p>
-                    ${tallaInfo ? `<p class="product-size" style="color: var(--gray); font-size: 0.8rem; margin-bottom: 1rem;">
-                        Talla ${producto.talla} · Hombro ${tallaInfo.hombro || '?'} · Pecho ${tallaInfo.pecho || '?'} · Manga ${tallaInfo.manga || '?'} · Largo ${tallaInfo.largo || '?'}
-                    </p>` : ''}
+                    ${medidasHTML}
                     ${buttonHTML}
                 </div>
             </div>
@@ -202,9 +208,27 @@ class ProductosManager {
 
         const imagenes = document.querySelectorAll('[data-zoomable="true"]');
         imagenes.forEach(img => {
-            img.addEventListener('click', () => {
-                this.abrirModalImagen(img);
-            });
+            if (!img.dataset.zoomHandler) {
+                img.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    this.abrirModalImagen(img);
+                });
+                img.dataset.zoomHandler = 'true';
+            }
+        });
+
+        const cards = document.querySelectorAll('.product-card[data-zoom-target]');
+        cards.forEach(card => {
+            if (!card.dataset.zoomCardHandler) {
+                card.addEventListener('click', (event) => {
+                    if (event.target.closest('.btn')) return;
+                    const img = card.querySelector('img[data-zoomable="true"]');
+                    if (img) {
+                        this.abrirModalImagen(img);
+                    }
+                });
+                card.dataset.zoomCardHandler = 'true';
+            }
         });
     }
 
