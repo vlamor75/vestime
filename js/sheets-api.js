@@ -5,21 +5,60 @@
 
 class SheetsAPI {
     constructor() {
-        this.cache = null;
-        this.cacheTime = null;
+        this.cache = {};
         this.CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
     }
 
     /**
-     * Obtiene la URL pública de la API de Google Sheets
+     * Construye la URL pública de Google Sheets
      */
-    getSheetURL() {
+    getSheetURL(sheetId = CONFIG.GOOGLE_SHEET_ID, sheetName = CONFIG.SHEET_NAME) {
         const baseURL = 'https://docs.google.com/spreadsheets/d';
-        const sheetId = CONFIG.GOOGLE_SHEET_ID;
-        const sheetName = CONFIG.SHEET_NAME;
+        return `${baseURL}/${sheetId}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+    }
 
-        // Formato CSV para leer fácilmente
-        return `${baseURL}/${sheetId}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
+    buildCacheKey(sheetId, sheetName) {
+        return `${sheetId}::${sheetName}`.toLowerCase();
+    }
+
+    async obtenerTabla(sheetId = CONFIG.GOOGLE_SHEET_ID, sheetName = CONFIG.SHEET_NAME) {
+        const cacheKey = this.buildCacheKey(sheetId, sheetName);
+        const now = Date.now();
+        const cacheEntry = this.cache[cacheKey];
+
+        if (cacheEntry && (now - cacheEntry.time < this.CACHE_DURATION)) {
+            console.log(`📦 Usando cache para hoja ${sheetName}`);
+            return cacheEntry.data;
+        }
+
+        try {
+            console.log(`🔄 Descargando datos de hoja ${sheetName}...`);
+            const url = this.getSheetURL(sheetId, sheetName);
+            const response = await fetch(url);
+            const text = await response.text();
+            const json = this.parseGoogleSheetsResponse(text);
+
+            if (!json || !json.table) {
+                throw new Error('Formato de respuesta inválido');
+            }
+
+            this.cache[cacheKey] = {
+                data: json.table,
+                time: now
+            };
+
+            return json.table;
+
+        } catch (error) {
+            console.error(`❌ Error al obtener hoja ${sheetName}:`, error);
+
+            if (cacheEntry) {
+                console.log('⚠️ Usando cache antiguo como fallback');
+                return cacheEntry.data;
+            }
+
+            return null;
+        }
     }
 
     /**
@@ -27,47 +66,32 @@ class SheetsAPI {
      * Usa cache para evitar múltiples llamadas
      */
     async obtenerReferidos() {
-        // Verificar si hay cache válido
-        const now = Date.now();
-        if (this.cache && this.cacheTime && (now - this.cacheTime < this.CACHE_DURATION)) {
-            console.log('📦 Usando cache de referidos');
-            return this.cache;
-        }
-
-        try {
-            console.log('🔄 Descargando referidos desde Google Sheets...');
-            const url = this.getSheetURL();
-            const response = await fetch(url);
-            const text = await response.text();
-
-            // Google Sheets devuelve JSONP, necesitamos extraer el JSON
-            const json = this.parseGoogleSheetsResponse(text);
-
-            if (!json || !json.table) {
-                throw new Error('Formato de respuesta inválido');
-            }
-
-            // Parsear los datos
-            const referidos = this.parseReferidos(json.table);
-
-            // Guardar en cache
-            this.cache = referidos;
-            this.cacheTime = now;
-
-            console.log(`✅ ${referidos.length} referidos cargados`);
-            return referidos;
-
-        } catch (error) {
-            console.error('❌ Error al obtener referidos:', error);
-
-            // Si hay cache antiguo, usarlo como fallback
-            if (this.cache) {
-                console.log('⚠️ Usando cache antiguo como fallback');
-                return this.cache;
-            }
-
+        const table = await this.obtenerTabla(CONFIG.GOOGLE_SHEET_ID, CONFIG.SHEET_NAME);
+        if (!table) {
             return [];
         }
+
+        const referidos = this.parseReferidos(table);
+        console.log(`✅ ${referidos.length} referidos cargados`);
+        return referidos;
+    }
+
+    async obtenerInventario() {
+        const table = await this.obtenerTabla(CONFIG.INVENTARIO_SHEET_ID, CONFIG.INVENTARIO_SHEET_NAME);
+        if (!table) {
+            return [];
+        }
+
+        return this.parseInventario(table);
+    }
+
+    async obtenerTallas() {
+        const table = await this.obtenerTabla(CONFIG.INVENTARIO_SHEET_ID, CONFIG.TALLAS_SHEET_NAME);
+        if (!table) {
+            return {};
+        }
+
+        return this.parseTallas(table);
     }
 
     /**
@@ -116,6 +140,80 @@ class SheetsAPI {
         }
 
         return referidos;
+    }
+
+    parseInventario(table) {
+        const productos = [];
+        const rows = table.rows;
+
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row.c) continue;
+
+            const referencia = this.getCellValue(row.c[1]);
+            if (!referencia) continue;
+
+            const sexo = this.getCellValue(row.c[2]) || 'Unisex';
+            const talla = this.getCellValue(row.c[3]) || 'Única';
+            const estado = this.getCellValue(row.c[4]) || 'Único';
+            const descripcion = this.getCellValue(row.c[5]) || `Referencia ${referencia}`;
+
+            const categoria = this.mapSexoACategoria(sexo);
+            const imagen = `./images/productos/${categoria}/${referencia.toLowerCase()}.png`;
+            const estadoNormalizado = estado.toLowerCase();
+
+            productos.push({
+                item: this.getCellValue(row.c[0]),
+                id: referencia,
+                referencia,
+                sexo,
+                talla,
+                estado: estado,
+                descripcion,
+                nombre: descripcion,
+                categoria,
+                imagen,
+                destacado: estadoNormalizado !== 'agotado'
+            });
+        }
+
+        return productos;
+    }
+
+    parseTallas(table) {
+        const tallas = {};
+        const rows = table.rows;
+
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            if (!row.c) continue;
+
+            const sexo = this.getCellValue(row.c[0]);
+            const talla = this.getCellValue(row.c[1]);
+            if (!sexo || !talla) continue;
+
+            const key = this.getTallaKey(sexo, talla);
+            tallas[key] = {
+                hombro: this.getCellValue(row.c[2]),
+                pecho: this.getCellValue(row.c[3]),
+                manga: this.getCellValue(row.c[4]),
+                largo: this.getCellValue(row.c[5])
+            };
+        }
+
+        return tallas;
+    }
+
+    mapSexoACategoria(sexo) {
+        const sexoLower = (sexo || '').toLowerCase();
+        if (sexoLower.includes('hombre')) {
+            return 'hombre-premium';
+        }
+        return 'mujer-basic';
+    }
+
+    getTallaKey(sexo, talla) {
+        return `${(sexo || '').toLowerCase()}-${(talla || '').toUpperCase()}`;
     }
 
     /**

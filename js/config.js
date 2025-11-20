@@ -18,5 +18,10 @@ const CONFIG = {
     MENSAJE_DEFAULT: 'Hola! Me interesa información sobre sus camisetas 👕',
 
     // Base opcional para servir imágenes desde GitHub (raw). Dejar vacío para usar archivos locales.
-    IMAGES_BASE_URL: 'https://raw.githubusercontent.com/vlamor75/vestime/main'
+    IMAGES_BASE_URL: 'https://raw.githubusercontent.com/vlamor75/vestime/main',
+
+    // Google Sheet público con inventario y tallas
+    INVENTARIO_SHEET_ID: '1Coby_FTr0Y3z5rZlgxTh0AWEP1i5qfUFBixZbAwnmSU',
+    INVENTARIO_SHEET_NAME: 'inventario',
+    TALLAS_SHEET_NAME: 'tallas'
 };

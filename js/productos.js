@@ -6,7 +6,11 @@
 class ProductosManager {
     constructor() {
         this.productos = [];
-        this.categorias = {};
+        this.categorias = {
+            'hombre-premium': 'Hombre Premium',
+            'mujer-basic': 'Mujer Basic'
+        };
+        this.tallas = {};
     }
 
     /**
@@ -14,16 +18,21 @@ class ProductosManager {
      */
     async cargarProductos() {
         try {
-            const response = await fetch('./productos.json');
-            const data = await response.json();
+            const [inventario, tallas] = await Promise.all([
+                window.sheetsAPI.obtenerInventario(),
+                window.sheetsAPI.obtenerTallas()
+            ]);
 
-            this.productos = data.productos;
-            this.categorias = data.categorias;
+            this.productos = inventario.map(producto => ({
+                ...producto,
+                categoriaDisplay: this.categorias[producto.categoria] || producto.categoria
+            }));
+            this.tallas = tallas;
 
-            console.log(`✅ ${this.productos.length} productos cargados`);
+            console.log(`✅ ${this.productos.length} productos cargados desde Google Sheets`);
             return true;
         } catch (error) {
-            console.error('❌ Error cargando productos:', error);
+            console.error('❌ Error cargando productos desde Google Sheets:', error);
             return false;
         }
     }
@@ -60,7 +69,8 @@ class ProductosManager {
      */
     generarProductoHTML(producto) {
         const imagenURL = this.getImagenURL(producto);
-        const categoriaDisplay = this.categorias[producto.categoria] || producto.categoria;
+        const categoriaDisplay = producto.categoriaDisplay || this.categorias[producto.categoria] || producto.categoria;
+        const tallaInfo = this.getInfoTalla(producto);
 
         const estado = (producto.estado || '').toLowerCase();
         const isAgotado = estado === 'agotado';
@@ -100,9 +110,12 @@ class ProductosManager {
                     <p class="product-category" style="color: var(--gray); font-size: 0.9rem; margin-bottom: 0.5rem;">
                         ${categoriaDisplay}
                     </p>
-                    <p class="product-description" style="color: var(--gray); font-size: 0.875rem; margin-bottom: 1rem;">
+                    <p class="product-description" style="color: var(--gray); font-size: 0.875rem; margin-bottom: 0.5rem;">
                         ${producto.descripcion}
                     </p>
+                    ${tallaInfo ? `<p class="product-size" style="color: var(--gray); font-size: 0.8rem; margin-bottom: 1rem;">
+                        Talla ${producto.talla} · Hombro ${tallaInfo.hombro || '?'} · Pecho ${tallaInfo.pecho || '?'} · Manga ${tallaInfo.manga || '?'} · Largo ${tallaInfo.largo || '?'}
+                    </p>` : ''}
                     ${buttonHTML}
                 </div>
             </div>
@@ -163,6 +176,11 @@ class ProductosManager {
             p.descripcion.toLowerCase().includes(textoLower) ||
             p.id.toLowerCase().includes(textoLower)
         );
+    }
+
+    getInfoTalla(producto) {
+        const key = window.sheetsAPI.getTallaKey?.(producto.sexo, producto.talla) || `${(producto.sexo || '').toLowerCase()}-${(producto.talla || '').toUpperCase()}`;
+        return this.tallas[key];
     }
 }
 
