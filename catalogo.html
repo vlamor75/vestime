@@ -235,6 +235,9 @@
                 if (window.sistemaReferidos) {
                     window.sistemaReferidos.actualizarBotonesWhatsApp();
                 }
+                if (window.productosManager && typeof window.productosManager.inicializarZoom === 'function') {
+                    window.productosManager.inicializarZoom();
+                }
             }
         }
 

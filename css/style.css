@@ -401,6 +401,30 @@ p {
     white-space: normal;
 }
 
+.image-zoom-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0,0,0,0.6);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 16;
+    transition: var(--transition-fast);
+    backdrop-filter: blur(4px);
+}
+
+.image-zoom-btn:hover,
+.image-zoom-btn:focus-visible {
+    background: rgba(0,0,0,0.85);
+}
+
 .product-card:hover .product-image img {
     transform: scale(1.1);
 }

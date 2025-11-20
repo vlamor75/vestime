@@ -113,6 +113,9 @@ class ProductosManager {
         return `
             <div class="${cardClasses.join(' ')}" data-category="${producto.categoria}" data-producto-id="${producto.id}" data-zoom-target="${imagenURL}">
                 <div class="product-image">
+                    <button class="image-zoom-btn" type="button" aria-label="Ver imagen ampliada">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
                     ${tallaBadge}
                     ${badgeHTML}
                     <img src="${imagenURL}"
@@ -209,10 +212,14 @@ class ProductosManager {
         const imagenes = document.querySelectorAll('[data-zoomable="true"]');
         imagenes.forEach(img => {
             if (!img.dataset.zoomHandler) {
-                img.addEventListener('click', (event) => {
+                const handler = (event) => {
                     event.stopPropagation();
+                    event.preventDefault();
                     this.abrirModalImagen(img);
-                });
+                };
+
+                img.addEventListener('click', handler);
+                img.addEventListener('touchend', handler, { passive: false });
                 img.dataset.zoomHandler = 'true';
             }
         });
@@ -220,14 +227,38 @@ class ProductosManager {
         const cards = document.querySelectorAll('.product-card[data-zoom-target]');
         cards.forEach(card => {
             if (!card.dataset.zoomCardHandler) {
-                card.addEventListener('click', (event) => {
+                const handler = (event) => {
                     if (event.target.closest('.btn')) return;
+                    if (event.type === 'click') {
+                        const img = card.querySelector('img[data-zoomable="true"]');
+                        if (img) {
+                            this.abrirModalImagen(img);
+                        }
+                    }
+                };
+
+                card.addEventListener('click', handler);
+                card.dataset.zoomCardHandler = 'true';
+            }
+        });
+
+        const zoomButtons = document.querySelectorAll('.image-zoom-btn');
+        zoomButtons.forEach(btn => {
+            if (!btn.dataset.zoomButtonHandler) {
+                const handler = (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    const card = btn.closest('.product-card');
+                    if (!card) return;
                     const img = card.querySelector('img[data-zoomable="true"]');
                     if (img) {
                         this.abrirModalImagen(img);
                     }
-                });
-                card.dataset.zoomCardHandler = 'true';
+                };
+
+                btn.addEventListener('click', handler);
+                btn.addEventListener('touchend', handler, { passive: false });
+                btn.dataset.zoomButtonHandler = 'true';
             }
         });
     }
