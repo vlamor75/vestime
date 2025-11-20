@@ -60,6 +60,17 @@
       "descripcion": "Diseño único de alta calidad",
       "destacado": false
     },
+
+ {
+      "id": "hp008",
+      "nombre": "Camiseta Hombre Premium #8",
+      "categoria": "hombre-premium",
+      "imagen": "./images/productos/hombre-premium/hp008.png",
+      "descripcion": "Diseño único de alta calidad",
+      "destacado": false
+    },
+
+
     {
       "id": "mb001",
       "nombre": "Camiseta Mujer Basic #1",
@@ -142,6 +153,15 @@
       "descripcion": "Diseño básico y cómodo",
       "destacado": false,
       "estado": "agotado"
+    }, 
+    {
+      "id": "mb011",
+      "nombre": "Camiseta Mujer Basic #10",
+      "categoria": "mujer-basic",
+      "imagen": "./images/productos/mujer-basic/mb011.png",
+      "descripcion": "Diseño básico y cómodo",
+      "destacado": false
+      
     }
   ]
 }
