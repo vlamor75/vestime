@@ -85,13 +85,9 @@ class ProductosManager {
         ].map(item => `
                             <span>${item.label}: ${item.value || '-'} cm</span>`).join('') : '';
 
-        const sizeBlockHTML = (producto.talla || measurements) ? `
+        const sizeBlockHTML = measurements ? `
                     <div class="product-size-block">
-                        <p class="product-size-line">
-                            ${producto.talla ? `Talla ${producto.talla}` : 'Medidas'}
-                            ${producto.sexo ? `<small>${producto.sexo}</small>` : ''}
-                        </p>
-                        ${measurements ? `<div class="product-measurements">${measurements}</div>` : ''}
+                        <div class="product-measurements">${measurements}</div>
                     </div>` : '';
 
         const estado = (producto.estado || '').toLowerCase();
