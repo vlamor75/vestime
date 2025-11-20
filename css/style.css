@@ -375,6 +375,28 @@ p {
     transition: var(--transition-slow);
 }
 
+.size-badge {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: var(--white);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-lg);
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.2;
+    z-index: 15;
+    backdrop-filter: blur(4px);
+}
+
+.size-badge small {
+    display: block;
+    font-weight: 400;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.75);
+}
+
 .product-card:hover .product-image img {
     transform: scale(1.1);
 }
@@ -427,6 +449,70 @@ p {
     color: var(--gray);
     font-weight: 400;
     text-decoration: line-through;
+}
+
+/* === MODAL DE IMAGEN === */
+.image-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: var(--transition-slow);
+    z-index: 2000;
+    padding: var(--spacing-sm);
+}
+
+.image-modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.image-modal__content {
+    position: relative;
+    max-width: min(90vw, 600px);
+    width: 100%;
+    background: var(--white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    animation: zoomIn 0.3s ease;
+}
+
+.image-modal__content img {
+    width: 100%;
+    display: block;
+}
+
+.image-modal__caption {
+    padding: var(--spacing-sm);
+    font-size: 0.95rem;
+    color: var(--dark);
+}
+
+.image-modal__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.65);
+    color: var(--white);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
 /* === BOTÓN FLOTANTE DE WHATSAPP === */

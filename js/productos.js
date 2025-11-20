@@ -11,6 +11,7 @@ class ProductosManager {
             'mujer-basic': 'Mujer Basic'
         };
         this.tallas = {};
+        this.modal = null;
     }
 
     /**
@@ -71,6 +72,11 @@ class ProductosManager {
         const imagenURL = this.getImagenURL(producto);
         const categoriaDisplay = producto.categoriaDisplay || this.categorias[producto.categoria] || producto.categoria;
         const tallaInfo = this.getInfoTalla(producto);
+        const tallaBadge = producto.talla ? `
+                    <div class="size-badge">
+                        Talla ${producto.talla}
+                        ${tallaInfo ? `<small>${producto.sexo}</small>` : ''}
+                    </div>` : '';
 
         const estado = (producto.estado || '').toLowerCase();
         const isAgotado = estado === 'agotado';
@@ -99,11 +105,13 @@ class ProductosManager {
         return `
             <div class="${cardClasses.join(' ')}" data-category="${producto.categoria}" data-producto-id="${producto.id}">
                 <div class="product-image">
+                    ${tallaBadge}
                     ${badgeHTML}
                     <img src="${imagenURL}"
                          alt="${producto.nombre}"
                          loading="lazy"
-                         onerror="this.src='https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Vestime'">
+                         onerror="this.src='https://via.placeholder.com/400x400/FF6B6B/FFFFFF?text=Vestime'"
+                         data-zoomable="true">
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">${producto.nombre}</h3>
@@ -156,6 +164,9 @@ class ProductosManager {
             window.sistemaReferidos.actualizarBotonesWhatsApp();
         }
 
+        // Configurar zoom en imágenes
+        this.inicializarZoom();
+
         console.log(`📦 ${productosFiltrados.length} productos renderizados en #${contenedorId}`);
     }
 
@@ -181,6 +192,53 @@ class ProductosManager {
     getInfoTalla(producto) {
         const key = window.sheetsAPI.getTallaKey?.(producto.sexo, producto.talla) || `${(producto.sexo || '').toLowerCase()}-${(producto.talla || '').toUpperCase()}`;
         return this.tallas[key];
+    }
+
+    inicializarZoom() {
+        if (!this.modal) {
+            this.modal = this.crearModalImagen();
+            document.body.appendChild(this.modal);
+        }
+
+        const imagenes = document.querySelectorAll('[data-zoomable="true"]');
+        imagenes.forEach(img => {
+            img.addEventListener('click', () => {
+                this.abrirModalImagen(img);
+            });
+        });
+    }
+
+    crearModalImagen() {
+        const modal = document.createElement('div');
+        modal.className = 'image-modal';
+        modal.innerHTML = `
+            <div class="image-modal__content">
+                <button class="image-modal__close" aria-label="Cerrar">&times;</button>
+                <img src="" alt="">
+                <div class="image-modal__caption"></div>
+            </div>
+        `;
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal || event.target.classList.contains('image-modal__close')) {
+                modal.classList.remove('open');
+            }
+        });
+
+        return modal;
+    }
+
+    abrirModalImagen(img) {
+        if (!this.modal) return;
+
+        const modalImage = this.modal.querySelector('img');
+        const caption = this.modal.querySelector('.image-modal__caption');
+
+        modalImage.src = img.src;
+        modalImage.alt = img.alt;
+        caption.textContent = img.alt || 'Producto Vestime';
+
+        this.modal.classList.add('open');
     }
 }
 
