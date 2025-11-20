@@ -93,7 +93,8 @@
       "categoria": "mujer-basic",
       "imagen": "./images/productos/mujer-basic/mb003.png",
       "descripcion": "Diseño básico y cómodo",
-      "destacado": false
+      "destacado": false,
+      "estado": "agotado"
     },
     {
       "id": "mb004",
