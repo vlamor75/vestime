@@ -75,16 +75,27 @@ class ProductosManager {
         const tallaBadge = producto.talla ? `
                     <div class="size-badge">
                         Talla ${producto.talla}
+                    </div>` : '';
+
+        const sizeChip = producto.talla ? `
+                    <div class="product-size-chip">
+                        Talla ${producto.talla}
                         ${producto.sexo ? `<small>${producto.sexo}</small>` : ''}
                     </div>` : '';
-        const medidasHTML = tallaInfo ? `
-                    <p class="product-size">
-                        Medidas:
-                        <span>Hombro ${tallaInfo.hombro || '?'} cm</span> ·
-                        <span>Pecho ${tallaInfo.pecho || '?'} cm</span> ·
-                        <span>Manga ${tallaInfo.manga || '?'} cm</span> ·
-                        <span>Largo ${tallaInfo.largo || '?'} cm</span>
-                    </p>` : '';
+
+        const measurements = tallaInfo ? [
+            { label: 'Hombro', value: tallaInfo.hombro },
+            { label: 'Pecho', value: tallaInfo.pecho },
+            { label: 'Manga', value: tallaInfo.manga },
+            { label: 'Largo', value: tallaInfo.largo }
+        ].map(item => `
+                        <div><span>${item.label}:</span> ${item.value || '-'} cm</div>`).join('') : '';
+
+        const sizeBlockHTML = (sizeChip || measurements) ? `
+                    <div class="product-size-block">
+                        ${sizeChip}
+                        ${measurements ? `<div class="product-measurements">${measurements}</div>` : ''}
+                    </div>` : '';
 
         const estado = (producto.estado || '').toLowerCase();
         const isAgotado = estado === 'agotado';
@@ -113,9 +124,6 @@ class ProductosManager {
         return `
             <div class="${cardClasses.join(' ')}" data-category="${producto.categoria}" data-producto-id="${producto.id}" data-zoom-target="${imagenURL}">
                 <div class="product-image">
-                    <button class="image-zoom-btn" type="button" aria-label="Ver imagen ampliada">
-                        <i class="fas fa-search-plus"></i>
-                    </button>
                     ${tallaBadge}
                     ${badgeHTML}
                     <img src="${imagenURL}"
@@ -132,7 +140,7 @@ class ProductosManager {
                     <p class="product-description" style="color: var(--gray); font-size: 0.875rem; margin-bottom: 0.5rem;">
                         ${producto.descripcion}
                     </p>
-                    ${medidasHTML}
+                    ${sizeBlockHTML}
                     ${buttonHTML}
                 </div>
             </div>
@@ -267,25 +275,6 @@ class ProductosManager {
             }
         });
 
-        const zoomButtons = document.querySelectorAll('.image-zoom-btn');
-        zoomButtons.forEach(btn => {
-            if (!btn.dataset.zoomButtonHandler) {
-                const handler = (event) => {
-                    event.stopPropagation();
-                    event.preventDefault();
-                    const card = btn.closest('.product-card');
-                    if (!card) return;
-                    const img = card.querySelector('img[data-zoomable="true"]');
-                    if (img) {
-                        this.abrirModalImagen(img);
-                    }
-                };
-
-                btn.addEventListener('click', handler);
-                btn.addEventListener('touchend', handler, { passive: false });
-                btn.dataset.zoomButtonHandler = 'true';
-            }
-        });
     }
 
     crearModalImagen() {

@@ -366,6 +366,7 @@ p {
     overflow: hidden;
     aspect-ratio: 1;
     background: var(--light-gray);
+    cursor: pointer;
 }
 
 .product-image img {
@@ -424,10 +425,44 @@ p {
     padding: var(--spacing-sm);
 }
 
-.product-size {
+.product-size-block {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--light-gray);
+}
+
+.product-size-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--primary);
+    color: var(--white);
+    padding: 0.3rem 0.9rem;
+    border-radius: var(--radius-lg);
+    font-weight: 700;
     font-size: 0.85rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.product-size-chip small {
     font-weight: 600;
-    color: var(--primary-dark);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+}
+
+.product-measurements {
+    margin-top: 0.6rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    font-size: 0.8rem;
+    color: var(--gray);
+}
+
+.product-measurements span {
+    color: var(--dark);
+    font-weight: 600;
 }
 
 .product-name {
@@ -453,72 +488,21 @@ p {
 
 /* === GUÍA DE TALLAS === */
 
-.size-guide-section {
-    background: var(--light-gray);
-    border-radius: var(--radius-lg);
+.size-guide-banner {
+    background: var(--gradient-primary);
+    color: var(--white);
+    border-radius: var(--radius-xl);
     padding: var(--spacing-lg);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
 }
 
-.size-guide-header {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: var(--spacing-md);
+.size-guide-banner h2 {
+    margin-bottom: 0.5rem;
 }
 
-.size-guide-header p {
-    color: var(--gray);
-    margin-bottom: 0;
-}
-
-.size-guide-diagram {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--spacing-md);
-    align-items: center;
-    margin-bottom: var(--spacing-md);
-}
-
-.diagram-card {
-    background: var(--white);
-    border-radius: var(--radius-md);
-    padding: var(--spacing-sm);
-    box-shadow: var(--shadow-sm);
-}
-
-.diagram-card svg {
-    width: 100%;
-    height: auto;
-}
-
-.diagram-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.diagram-item {
-    display: flex;
-    gap: 0.5rem;
-    align-items: flex-start;
-}
-
-.diagram-item span {
-    font-weight: 700;
-    color: var(--primary);
-    min-width: 70px;
-}
-
-.diagram-item p {
-    margin-bottom: 0;
-    color: var(--gray);
-}
-
-.size-guide-cta {
-    text-align: center;
+.size-guide-banner p {
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 1rem;
 }
 
 .size-guide-modal {
