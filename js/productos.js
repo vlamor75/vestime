@@ -127,9 +127,6 @@ class ProductosManager {
                 </div>
                 <div class="product-info">
                     <h3 class="product-name">${producto.nombre}</h3>
-                    <p class="product-category" style="color: var(--gray); font-size: 0.9rem; margin-bottom: 0.5rem;">
-                        ${categoriaDisplay}
-                    </p>
                     <p class="product-description" style="color: var(--gray); font-size: 0.875rem; margin-bottom: 0.5rem;">
                         ${producto.descripcion}
                     </p>
