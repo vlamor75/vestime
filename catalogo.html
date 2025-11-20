@@ -165,6 +165,35 @@
         </div>
     </section>
 
+    <!-- Modal Guía de Tallas -->
+    <div class="size-guide-modal" id="size-guide-modal" aria-hidden="true">
+        <div class="size-guide-modal__content">
+            <button class="size-guide-close" aria-label="Cerrar">&times;</button>
+            <h3 style="margin-bottom: 0.5rem;">Guía completa de tallas (cm)</h3>
+            <p style="color: var(--gray); margin-bottom: 1rem;">Selecciona una categoría y revisa las medidas exactas.</p>
+            <div class="size-guide-tabs">
+                <button type="button" data-size-guide-tab="hombre" class="active">Hombre</button>
+                <button type="button" data-size-guide-tab="mujer">Mujer</button>
+            </div>
+            <div class="size-guide-table-wrapper">
+                <table class="size-guide-table">
+                    <thead>
+                        <tr>
+                            <th>Talla</th>
+                            <th>Hombro</th>
+                            <th>Pecho</th>
+                            <th>Manga</th>
+                            <th>Largo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="size-guide-table-body">
+                        <tr><td colspan="5">Cargando tallas...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <!-- === CTA === -->
     <section class="section" style="background: var(--light-gray); text-align: center;">
         <div class="container">
@@ -212,6 +241,7 @@
     <script src="./js/sheets-api.js"></script>
     <script src="./js/referidos.js"></script>
     <script src="./js/productos.js"></script>
+    <script src="./js/size-guide.js"></script>
 
     <!-- Script de filtros y búsqueda -->
     <script>
@@ -224,20 +254,48 @@
         let currentFilter = 'all';
         let searchTerm = '';
 
+        function crearTarjetaGuia() {
+            return `
+                <div class="product-card size-guide-card" aria-label="Guía de tallas">
+                    <div class="product-image" style="cursor: default;">
+                        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 70%; height: 70%;">
+                            <path d="M40 60 L80 40 H140 L180 60 L170 200 H50 Z" fill="rgba(255,255,255,0.15)" stroke="#fff" stroke-width="4" stroke-linejoin="round" />
+                            <line x1="40" y1="60" x2="180" y2="60" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
+                            <line x1="60" y1="110" x2="160" y2="110" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
+                            <line x1="100" y1="60" x2="100" y2="200" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
+                            <line x1="60" y1="70" x2="60" y2="180" stroke="#FFE66D" stroke-dasharray="5" stroke-width="3" />
+                        </svg>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name" style="color: white;">Guía de Tallas</h3>
+                        <p class="product-description" style="color: rgba(255,255,255,0.85);">
+                            Consulta las medidas exactas por talla para Hombre y Mujer.
+                        </p>
+                        <button class="btn btn-white btn-block" type="button" onclick="openSizeGuide()" style="color: var(--primary);">
+                            <i class="fas fa-ruler-combined"></i> Ver tabla completa
+                        </button>
+                    </div>
+                </div>`;
+        }
+
         function updateUI(products) {
             productsCount.textContent = products.length;
+
             if (products.length === 0) {
                 noResults.style.display = 'block';
                 productsGrid.innerHTML = '';
-            } else {
-                noResults.style.display = 'none';
-                productsGrid.innerHTML = products.map(p => window.productosManager.generarProductoHTML(p)).join('');
-                if (window.sistemaReferidos) {
-                    window.sistemaReferidos.actualizarBotonesWhatsApp();
-                }
-                if (window.productosManager && typeof window.productosManager.inicializarZoom === 'function') {
-                    window.productosManager.inicializarZoom();
-                }
+                return;
+            }
+
+            noResults.style.display = 'none';
+            const productosHTML = products.map(p => window.productosManager.generarProductoHTML(p)).join('');
+            productsGrid.innerHTML = productosHTML + crearTarjetaGuia();
+
+            if (window.sistemaReferidos) {
+                window.sistemaReferidos.actualizarBotonesWhatsApp();
+            }
+            if (window.productosManager && typeof window.productosManager.inicializarZoom === 'function') {
+                window.productosManager.inicializarZoom();
             }
         }
 

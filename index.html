@@ -67,63 +67,6 @@
         </div>
     </section>
 
-    <!-- === GUÍA DE TALLAS === -->
-    <section class="section">
-        <div class="container size-guide-section">
-            <div class="size-guide-header">
-                <div>
-                    <h2>Guía de Tallas en Centímetros</h2>
-                    <p>Consulta cómo medimos hombro, pecho, manga y largo antes de comprar.</p>
-                </div>
-                <button class="btn btn-secondary" type="button" data-size-guide-open>
-                    <i class="fas fa-ruler-combined"></i> Ver tabla completa
-                </button>
-            </div>
-            <div class="size-guide-diagram">
-                <div class="diagram-card">
-                    <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M40 60 L80 40 H140 L180 60 L170 200 H50 Z" fill="#fff" stroke="#FF6B6B" stroke-width="4" stroke-linejoin="round" />
-                        <line x1="40" y1="60" x2="180" y2="60" stroke="#FFA07A" stroke-dasharray="6" stroke-width="3" />
-                        <line x1="60" y1="110" x2="160" y2="110" stroke="#FFA07A" stroke-dasharray="6" stroke-width="3" />
-                        <line x1="100" y1="60" x2="100" y2="200" stroke="#FFA07A" stroke-dasharray="6" stroke-width="3" />
-                        <line x1="60" y1="70" x2="60" y2="180" stroke="#FFA07A" stroke-dasharray="5" stroke-width="3" />
-                        <circle cx="60" cy="60" r="10" fill="#FF6B6B" />
-                        <text x="60" y="55" fill="#fff" font-size="10" text-anchor="middle">H</text>
-                        <circle cx="110" cy="110" r="10" fill="#FF6B6B" />
-                        <text x="110" y="105" fill="#fff" font-size="10" text-anchor="middle">P</text>
-                        <circle cx="60" cy="150" r="10" fill="#FF6B6B" />
-                        <text x="60" y="145" fill="#fff" font-size="10" text-anchor="middle">M</text>
-                        <circle cx="150" cy="180" r="10" fill="#FF6B6B" />
-                        <text x="150" y="175" fill="#fff" font-size="10" text-anchor="middle">L</text>
-                    </svg>
-                </div>
-                <div class="diagram-card diagram-list">
-                    <div class="diagram-item">
-                        <span>Hombro</span>
-                        <p>Distancia entre ambos hombros. Ideal para saber cómo ajusta la parte superior.</p>
-                    </div>
-                    <div class="diagram-item">
-                        <span>Pecho</span>
-                        <p>Contorno a la altura del pecho. Asegura libertad de movimiento.</p>
-                    </div>
-                    <div class="diagram-item">
-                        <span>Manga</span>
-                        <p>Largo desde el hombro hasta la muñeca.</p>
-                    </div>
-                    <div class="diagram-item">
-                        <span>Largo</span>
-                        <p>Medido desde la parte superior del cuello hasta el ruedo.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="size-guide-cta">
-                <p style="color: var(--gray); margin-bottom: 0.5rem;">¿Dudas? Abre la tabla completa de tallas por sexo y talla.</p>
-                <button class="btn btn-primary" type="button" data-size-guide-open>
-                    <i class="fas fa-table"></i> Abrir guía completa
-                </button>
-            </div>
-        </div>
-    </section>
 
     <!-- === CARACTERÍSTICAS PRINCIPALES === -->
     <section class="section">
@@ -259,34 +202,6 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Modal Guía de Tallas -->
-    <div class="size-guide-modal" id="size-guide-modal" aria-hidden="true">
-        <div class="size-guide-modal__content">
-            <button class="size-guide-close" aria-label="Cerrar">&times;</button>
-            <h3 style="margin-bottom: 0.5rem;">Guía completa de tallas (cm)</h3>
-            <p style="color: var(--gray); margin-bottom: 1rem;">Selecciona una categoría y revisa las medidas exactas.</p>
-            <div class="size-guide-tabs">
-                <button type="button" data-size-guide-tab="hombre" class="active">Hombre</button>
-                <button type="button" data-size-guide-tab="mujer">Mujer</button>
-            </div>
-            <div class="size-guide-table-wrapper">
-                <table class="size-guide-table">
-                    <thead>
-                        <tr>
-                            <th>Talla</th>
-                            <th>Hombro</th>
-                            <th>Pecho</th>
-                            <th>Manga</th>
-                            <th>Largo</th>
-                        </tr>
-                    </thead>
-                    <tbody id="size-guide-table-body">
-                        <tr><td colspan="5">Cargando tallas...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 
     <!-- === SCRIPTS === -->
     <!-- Cargar en orden: Config → Sheets API → Referidos -->
@@ -294,7 +209,6 @@
     <script src="./js/sheets-api.js"></script>
     <script src="./js/referidos.js"></script>
     <script src="./js/productos.js"></script>
-    <script src="./js/size-guide.js"></script>
 
     <!-- Script para header sticky -->
     <script>

@@ -431,24 +431,20 @@ p {
     border-top: 1px solid var(--light-gray);
 }
 
-.product-size-chip {
-    display: inline-flex;
+.product-size-line {
+    display: flex;
     align-items: center;
-    gap: 0.4rem;
-    background: var(--primary);
-    color: var(--white);
-    padding: 0.3rem 0.9rem;
-    border-radius: var(--radius-lg);
+    gap: 0.5rem;
     font-weight: 700;
-    font-size: 0.85rem;
-    box-shadow: var(--shadow-sm);
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
 }
 
-.product-size-chip small {
+.product-size-line small {
     font-weight: 600;
-    letter-spacing: 0.05em;
+    color: var(--gray);
     text-transform: uppercase;
-    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.05em;
 }
 
 .product-measurements {
@@ -488,21 +484,30 @@ p {
 
 /* === GUÍA DE TALLAS === */
 
-.size-guide-banner {
+.size-guide-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
     background: var(--gradient-primary);
     color: var(--white);
-    border-radius: var(--radius-xl);
-    padding: var(--spacing-lg);
-    box-shadow: var(--shadow-md);
 }
 
-.size-guide-banner h2 {
+.size-guide-card .product-image {
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+}
+
+.size-guide-card h3 {
     margin-bottom: 0.5rem;
 }
 
-.size-guide-banner p {
+.size-guide-card p {
     color: rgba(255,255,255,0.85);
-    margin-bottom: 1rem;
+    font-size: 0.9rem;
 }
 
 .size-guide-modal {

@@ -1,23 +1,49 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const modal = document.getElementById('size-guide-modal');
-    if (!modal || !window.productosManager) return;
+class SizeGuideModal {
+    constructor(modalId) {
+        this.modal = document.getElementById(modalId);
+        this.currentTab = 'hombre';
+        this.tableBody = null;
+        this.tabButtons = [];
 
-    const tableBody = modal.querySelector('#size-guide-table-body');
-    const tabButtons = modal.querySelectorAll('[data-size-guide-tab]');
-    const openButtons = document.querySelectorAll('[data-size-guide-open]');
-    const closeButton = modal.querySelector('.size-guide-close');
-    let currentTab = 'hombre';
+        if (this.modal) {
+            this.init();
+        }
+    }
 
-    const renderTabla = () => {
+    init() {
+        if (!window.productosManager) return;
+
+        this.tableBody = this.modal.querySelector('#size-guide-table-body');
+        this.tabButtons = this.modal.querySelectorAll('[data-size-guide-tab]');
+        const closeButton = this.modal.querySelector('.size-guide-close');
+
+        closeButton.addEventListener('click', () => this.close());
+        this.modal.addEventListener('click', (event) => {
+            if (event.target === this.modal) {
+                this.close();
+            }
+        });
+
+        this.tabButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.tabButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                this.currentTab = btn.dataset.sizeGuideTab;
+                this.renderTable();
+            });
+        });
+    }
+
+    renderTable() {
         const tallas = window.productosManager.getTallasAgrupadas();
-        const lista = tallas[currentTab] || [];
+        const lista = tallas[this.currentTab] || [];
 
         if (!lista.length) {
-            tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Sin datos para esta categoría</td></tr>`;
+            this.tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center;">Sin datos para esta categoría</td></tr>`;
             return;
         }
 
-        tableBody.innerHTML = lista.map(item => `
+        this.tableBody.innerHTML = lista.map(item => `
             <tr>
                 <td>${item.talla}</td>
                 <td>${item.hombro}</td>
@@ -26,33 +52,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${item.largo}</td>
             </tr>
         `).join('');
-    };
+    }
 
-    const openModal = () => {
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        renderTabla();
-    };
+    open() {
+        if (!this.modal) return;
+        this.modal.classList.add('open');
+        this.modal.setAttribute('aria-hidden', 'false');
+        this.renderTable();
+    }
 
-    const closeModal = () => {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-    };
+    close() {
+        if (!this.modal) return;
+        this.modal.classList.remove('open');
+        this.modal.setAttribute('aria-hidden', 'true');
+    }
+}
 
-    openButtons.forEach(btn => btn.addEventListener('click', openModal));
-    closeButton.addEventListener('click', closeModal);
-    modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
+window.sizeGuideModal = new SizeGuideModal('size-guide-modal');
 
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentTab = btn.dataset.sizeGuideTab;
-            renderTabla();
-        });
-    });
-});
+window.openSizeGuide = () => {
+    window.sizeGuideModal?.open();
+};
