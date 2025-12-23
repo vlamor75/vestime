@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catálogo completo de camisetas Vestime. Diseños únicos para hombre y mujer a precios económicos.">
+
+    <title>Catálogo - Vestime</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="./images/favicon.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Estilos adicionales para el catálogo */
+        .catalog-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 0 2rem;
+            text-align: center;
+        }
+
+        .filters {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-box {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            transition: var(--transition-fast);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        .catalog-stats {
+            text-align: center;
+            margin: 1rem 0 2rem;
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- === HEADER === -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html">VESTIME</a>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="catalogo.html" class="active">Catálogo</a></li>
+                        <li><a href="index.html#como-funciona">Cómo Funciona</a></li>
+                        <li><a href="index.html#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- === CATALOG HEADER === -->
+    <section class="catalog-header">
+        <div class="container">
+            <h1>Catálogo Completo</h1>
+            <p>Descubre todos nuestros diseños únicos y exclusivos</p>
+        </div>
+    </section>
+
+    <!-- === FILTROS Y BÚSQUEDA === -->
+    <section class="section">
+        <div class="container">
+
+            <!-- Barra de búsqueda -->
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Buscar por nombre o código..." aria-label="Buscar productos">
+                <i class="fas fa-search"></i>
+            </div>
+
+            <!-- Filtros -->
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th"></i> Todos
+                </button>
+                <button class="filter-btn" data-filter="hombre-premium">
+                    <i class="fas fa-male"></i> Hombre Premium
+                </button>
+                <button class="filter-btn" data-filter="mujer-basic">
+                    <i class="fas fa-female"></i> Mujer Basic
+                </button>
+            </div>
+
+            <!-- Estadísticas -->
+            <div class="catalog-stats" id="catalog-stats">
+                Mostrando <strong id="products-count">0</strong> productos
+            </div>
+
+            <!-- Grid de productos -->
+            <div class="products-grid" id="products-grid">
+                <div class="product-card" style="text-align:center; padding:2rem; box-shadow:none; border:2px dashed var(--light-gray);">
+                    <p style="color: var(--gray);">Cargando catálogo...</p>
+                </div>
+            </div>
+
+            <!-- Mensaje cuando no hay resultados -->
+            <div id="no-results" style="display: none; text-align: center; padding: 3rem 0;">
+                <i class="fas fa-search" style="font-size: 4rem; color: var(--light-gray); margin-bottom: 1rem;"></i>
+                <h3>No se encontraron productos</h3>
+                <p style="color: var(--gray);">Intenta con otra búsqueda o filtro</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Modal Guía de Tallas -->
+    <div class="size-guide-modal" id="size-guide-modal" aria-hidden="true">
+        <div class="size-guide-modal__content">
+            <button class="size-guide-close" aria-label="Cerrar">&times;</button>
+            <h3 style="margin-bottom: 0.5rem;">Guía completa de tallas (cm)</h3>
+            <p style="color: var(--gray); margin-bottom: 1rem;">Selecciona una categoría y revisa las medidas.</p>
+            <div class="size-guide-tabs">
+                <button type="button" data-size-guide-tab="hombre" class="active">Hombre</button>
+                <button type="button" data-size-guide-tab="mujer">Mujer</button>
+            </div>
+            <div class="size-guide-table-wrapper">
+                <table class="size-guide-table">
+                    <thead>
+                        <tr>
+                            <th>Talla</th>
+                            <th>Hombro</th>
+                            <th>Pecho</th>
+                            <th>Manga</th>
+                            <th>Largo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="size-guide-table-body">
+                        <tr><td colspan="5">Cargando tallas...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- === CTA === -->
+    <section class="section" style="background: var(--light-gray); text-align: center;">
+        <div class="container">
+            <h2>¿No encontraste lo que buscabas?</h2>
+            <p style="color: var(--gray); margin: 1rem 0 2rem;">Contáctanos por WhatsApp y te ayudamos a encontrar tu camiseta perfecta</p>
+            <a href="#" class="btn btn-primary btn-lg" data-whatsapp data-mensaje="Hola! Busco un diseño específico 🔍">
+                <i class="fab fa-whatsapp"></i> Consultar Disponibilidad
+            </a>
+        </div>
+    </section>
+
+    <!-- === FOOTER === -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo" style="font-size: 2rem; margin-bottom: 1rem; color: white;">
+                    VESTIME
+                </div>
+                <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+                    Camisetas únicas y económicas para expresar tu estilo.
+                </p>
+
+                <div class="social-links">
+                   
+                    <a href="#" data-whatsapp data-mensaje="Hola! Tengo una consulta" aria-label="WhatsApp">
+                        <i class="fab fa-whatsapp"></i>
+                    </a>
+                </div>
+
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); opacity: 0.8; font-size: 0.875rem;">
+                    <p>© 2025 Vestime - Todos los derechos reservados</p>
+                    <p style="margin-top: 0.5rem;">Hecho con ❤️ en Colombia</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- === BOTÓN FLOTANTE DE WHATSAPP === -->
+    <a href="#" class="whatsapp-float" data-whatsapp data-mensaje="Hola! Tengo una consulta sobre el catálogo 👕" aria-label="Contactar por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- === SCRIPTS === -->
+    <script src="./js/config.js"></script>
+    <script src="./js/referidos.js"></script>
+    <script src="./js/productos.js"></script>
+    <script src="./js/size-guide.js"></script>
+
+    <!-- Script de filtros y búsqueda -->
+    <script>
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const searchInput = document.getElementById('search-input');
+        const noResults = document.getElementById('no-results');
+        const productsCount = document.getElementById('products-count');
+        const productsGrid = document.getElementById('products-grid');
+
+        let currentFilter = 'all';
+        let searchTerm = '';
+
+        function crearTarjetaGuia() {
+            return `
+                <div class="product-card size-guide-card" aria-label="Guía de tallas">
+                    <div class="product-image" style="cursor: default;">
+                        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 70%; height: 70%;">
+                            <path d="M40 60 L80 40 H140 L180 60 L170 200 H50 Z" fill="rgba(255,255,255,0.15)" stroke="#fff" stroke-width="4" stroke-linejoin="round" />
+                            <line x1="40" y1="60" x2="180" y2="60" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
+                            <line x1="60" y1="110" x2="160" y2="110" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
+                            <line x1="100" y1="60" x2="100" y2="200" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
+                            <line x1="60" y1="70" x2="60" y2="180" stroke="#FFE66D" stroke-dasharray="5" stroke-width="3" />
+                        </svg>
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name" style="color: white;">Guía de Tallas</h3>
+                        <p class="product-description" style="color: rgba(255,255,255,0.85);">
+                            Consulta las medidas por talla para Hombre y Mujer.
+                        </p>
+                        <button class="btn btn-white btn-block" type="button" onclick="openSizeGuide()" style="color: var(--primary);">
+                            <i class="fas fa-ruler-combined"></i> Ver tabla completa
+                        </button>
+                    </div>
+                </div>`;
+        }
+
+        function updateUI(products) {
+            productsCount.textContent = products.length;
+
+            if (products.length === 0) {
+                noResults.style.display = 'block';
+                productsGrid.innerHTML = '';
+                return;
+            }
+
+            noResults.style.display = 'none';
+            const productosHTML = products.map(p => window.productosManager.generarProductoHTML(p)).join('');
+            productsGrid.innerHTML = productosHTML + crearTarjetaGuia();
+
+            if (window.sistemaReferidos) {
+                window.sistemaReferidos.actualizarBotonesWhatsApp();
+            }
+            if (window.productosManager && typeof window.productosManager.inicializarZoom === 'function') {
+                window.productosManager.inicializarZoom();
+            }
+        }
+
+        function filtrarProductos() {
+            let productos = window.productosManager.productos || [];
+
+            if (currentFilter !== 'all') {
+                productos = productos.filter(p => p.categoria === currentFilter);
+            }
+
+            if (searchTerm) {
+                const term = searchTerm.toLowerCase();
+                productos = productos.filter(p =>
+                    p.nombre.toLowerCase().includes(term) ||
+                    p.descripcion.toLowerCase().includes(term) ||
+                    p.id.toLowerCase().includes(term)
+                );
+            }
+
+            updateUI(productos);
+        }
+
+        async function iniciarCatalogo() {
+            await window.productosManager.cargarProductos();
+            filtrarProductos();
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                filtrarProductos();
+            });
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchTerm = e.target.value.trim();
+            filtrarProductos();
+        });
+
+        iniciarCatalogo();
+
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

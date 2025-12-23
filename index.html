@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>VESTIME - Catálogo Digital</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #25D366;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Pantalla de bienvenida */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeOut 0.5s ease 2s forwards;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+
+        .splash-logo {
+            font-size: 4rem;
+            font-weight: 900;
+            letter-spacing: 0.5rem;
+            animation: glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .splash-tagline {
+            margin-top: 1rem;
+            font-size: 1rem;
+            letter-spacing: 0.3rem;
+            opacity: 0.7;
+        }
+
+        /* Selector de catálogo */
+        .catalog-selector {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .catalog-selector.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .catalog-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: 0.2rem;
+        }
+
+        .catalog-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .catalog-button {
+            padding: 1.5rem 2rem;
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .catalog-button:hover,
+        .catalog-button:active {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .catalog-button.premium {
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        .catalog-button.premium:hover {
+            background: #FFD700;
+            color: #000;
+        }
+
+        /* Contenedor principal */
+        .catalog-container {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .catalog-container.active {
+            opacity: 1;
+        }
+
+        /* Header */
+        .catalog-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .catalog-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 0.2rem;
+        }
+
+        .catalog-category {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+
+        .back-button {
+            background: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* Swiper */
+        .swiper {
+            width: 100%;
+            height: 100vh;
+            padding-top: 60px;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        .slide-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .slide-image {
+            width: 100%;
+            height: 80vh;
+            object-fit: contain;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .slide-info {
+            position: absolute;
+            bottom: 100px;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            text-align: center;
+        }
+
+        .slide-badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent-color);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1rem;
+            border-radius: 20px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .slide-title {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+        }
+
+        /* Navegación */
+        .swiper-pagination {
+            bottom: 20px !important;
+        }
+
+        .swiper-pagination-bullet {
+            background: #fff;
+            opacity: 0.5;
+            width: 8px;
+            height: 8px;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            background: var(--accent-color);
+        }
+
+        /* Botón WhatsApp */
+        .whatsapp-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-button svg {
+            width: 35px;
+            height: 35px;
+            fill: #fff;
+        }
+
+        /* Loading */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .catalog-logo {
+                font-size: 1.2rem;
+            }
+
+            .slide-image {
+                height: 75vh;
+            }
+
+            .whatsapp-button {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .whatsapp-button svg {
+                width: 28px;
+                height: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen">
+        <div class="splash-logo">VESTIME</div>
+        <div class="splash-tagline">CATÁLOGO DIGITAL</div>
+    </div>
+
+    <!-- Selector de Catálogo -->
+    <div class="catalog-selector" id="catalogSelector">
+        <h1 class="catalog-title">SELECCIONA TU CATÁLOGO</h1>
+        <div class="catalog-options">
+            <button class="catalog-button" onclick="loadCatalog('hombre')">
+                👔 HOMBRE
+            </button>
+            <button class="catalog-button" onclick="loadCatalog('mujer')">
+                👗 MUJER
+            </button>
+            <button class="catalog-button premium" onclick="loadCatalog('premium')">
+                ⭐ PREMIUM
+            </button>
+        </div>
+    </div>
+
+    <!-- Catálogo -->
+    <div class="catalog-container" id="catalogContainer">
+        <!-- Header -->
+        <div class="catalog-header">
+            <div class="catalog-logo">VESTIME</div>
+            <div class="catalog-category" id="categoryName"></div>
+            <button class="back-button" onclick="backToSelector()">← VOLVER</button>
+        </div>
+
+        <!-- Swiper -->
+        <div class="swiper" id="mainSwiper">
+            <div class="swiper-wrapper" id="swiperWrapper">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading" style="display: none;">
+            Cargando imágenes...
+        </div>
+    </div>
+
+    <!-- Botón WhatsApp -->
+    <a href="https://wa.me/573117167526?text=Hola%20VESTIME,%20estoy%20interesado%20en%20sus%20productos"
+       class="whatsapp-button"
+       id="whatsappButton"
+       target="_blank"
+       title="Contactar por WhatsApp">
+        <svg viewBox="0 0 32 32">
+            <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.957 0-7.51 6.11-13.62 13.62-13.62s13.62 6.11 13.62 13.62-6.11 13.62-13.62 13.62zM21.305 19.26c-0.346-0.174-2.049-1.007-2.366-1.123-0.316-0.117-0.547-0.174-0.776 0.174s-0.892 1.123-1.094 1.347c-0.201 0.223-0.402 0.251-0.748 0.076-0.346-0.174-1.461-0.539-2.785-1.722-1.031-0.922-1.727-2.063-1.929-2.409s-0.022-0.535 0.152-0.707c0.156-0.156 0.346-0.402 0.519-0.603s0.231-0.346 0.346-0.574c0.116-0.227 0.058-0.428-0.029-0.602s-0.776-1.87-1.063-2.565c-0.28-0.672-0.56-0.58-0.776-0.591-0.2-0.009-0.428-0.012-0.656-0.012s-0.603 0.085-0.92 0.428c-0.316 0.346-1.206 1.179-1.206 2.873s1.235 3.333 1.406 3.561c0.174 0.227 2.424 3.694 5.872 5.183 0.821 0.354 1.462 0.566 1.962 0.724 0.825 0.262 1.577 0.225 2.168 0.137 0.662-0.099 2.045-0.835 2.332-1.642s0.289-1.499 0.202-1.642c-0.087-0.145-0.316-0.231-0.662-0.406z"/>
+        </svg>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="js/cloudinary-config.js"></script>
+    <script>
+        let swiper = null;
+        let currentCategory = null;
+
+        // Ocultar splash después de 2.5s
+        setTimeout(() => {
+            document.querySelector('.splash-screen').style.display = 'none';
+        }, 2500);
+
+        // Actualizar mensaje de WhatsApp según categoría
+        function updateWhatsAppMessage(category) {
+            const messages = {
+                'hombre': 'Hola VESTIME, estoy interesado en el catálogo de HOMBRE 👔',
+                'mujer': 'Hola VESTIME, estoy interesada en el catálogo de MUJER 👗',
+                'premium': 'Hola VESTIME, estoy interesado en el catálogo PREMIUM ⭐'
+            };
+
+            const message = messages[category] || 'Hola VESTIME, estoy interesado en sus productos';
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappButton = document.getElementById('whatsappButton');
+            whatsappButton.href = `https://wa.me/573117167526?text=${encodedMessage}`;
+        }
+
+        async function loadCatalog(category) {
+            currentCategory = category;
+
+            // Ocultar selector
+            document.getElementById('catalogSelector').classList.add('hidden');
+
+            // Mostrar loading
+            document.getElementById('loading').style.display = 'block';
+
+            // Actualizar nombre de categoría
+            document.getElementById('categoryName').textContent = category.toUpperCase();
+
+            // Actualizar mensaje de WhatsApp según categoría
+            updateWhatsAppMessage(category);
+
+            try {
+                // Cargar imágenes
+                const response = await fetch('/cloudinary-urls.json');
+                const data = await response.json();
+                let images = data[category] || [];
+
+                // ORDENAR: Modelos primero, luego productos
+                images.sort((a, b) => {
+                    const aIsModel = a.original.includes('model');
+                    const bIsModel = b.original.includes('model');
+
+                    if (aIsModel && !bIsModel) return -1;  // a (modelo) va primero
+                    if (!aIsModel && bIsModel) return 1;   // b (modelo) va primero
+                    return 0; // mantener orden original si ambos son del mismo tipo
+                });
+
+                // Generar slides
+                const wrapper = document.getElementById('swiperWrapper');
+                wrapper.innerHTML = '';
+
+                images.forEach((img, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+
+                    const isModel = img.original.includes('model');
+                    const imageUrl = `https://res.cloudinary.com/dsw8wr69n/image/upload/f_webp,q_auto:good,w_1200/${img.publicId}`;
+
+                    // Quitar extensión del nombre
+                    const cleanName = img.original.replace(/\.(jpg|jpeg|png|webp)$/i, '').toUpperCase();
+
+                    slide.innerHTML = `
+                        <div class="slide-content">
+                            <img src="${imageUrl}"
+                                 alt="${cleanName}"
+                                 class="slide-image"
+                                 loading="${index < 3 ? 'eager' : 'lazy'}">
+                            <div class="slide-info">
+                                <div class="slide-badge">${isModel ? 'MODELO' : 'PRODUCTO'}</div>
+                                <div class="slide-title">${cleanName}</div>
+                            </div>
+                        </div>
+                    `;
+
+                    wrapper.appendChild(slide);
+                });
+
+                // Ocultar loading
+                document.getElementById('loading').style.display = 'none';
+
+                // Mostrar catálogo
+                document.getElementById('catalogContainer').classList.add('active');
+
+                // Inicializar Swiper
+                if (swiper) {
+                    swiper.destroy();
+                }
+
+                swiper = new Swiper('#mainSwiper', {
+                    direction: 'horizontal',
+                    loop: false,
+                    speed: 400,
+                    effect: 'slide',
+                    grabCursor: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    keyboard: {
+                        enabled: true,
+                    },
+                    mousewheel: {
+                        enabled: false,
+                    },
+                    preloadImages: false,
+                    lazy: {
+                        loadPrevNext: true,
+                        loadPrevNextAmount: 2,
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error cargando catálogo:', error);
+                alert('Error cargando las imágenes. Por favor intenta de nuevo.');
+                backToSelector();
+            }
+        }
+
+        function backToSelector() {
+            document.getElementById('catalogContainer').classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('catalogSelector').classList.remove('hidden');
+                if (swiper) {
+                    swiper.destroy();
+                    swiper = null;
+                }
+            }, 300);
+        }
+
+        // Prevenir zoom en móvil
+        document.addEventListener('gesturestart', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
