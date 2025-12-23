@@ -2,12 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.tab-btn');
     const grid = document.getElementById('products-grid');
 
-    // Cloudinary config
-    const CLOUD_NAME = 'dsw8wr69n';
-    const API_KEY = '392983564963296';
-    const API_SECRET = 'fWrqHzclliFQwmG1WisTBMmp-W0';
-    const auth = btoa(API_KEY + ':' + API_SECRET);
-
     // Intersection Observer for lazy loading
     const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -22,31 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let productsData = {};
 
-    // Function to fetch products from Cloudinary folder
-    async function fetchProductsFromFolder(folder) {
-        const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/image?prefix=vestime/${folder}&max_results=500`;
-        const response = await fetch(url, {
-            headers: {
-                'Authorization': 'Basic ' + auth
-            }
-        });
-        const data = await response.json();
-        return data.resources.map(resource => ({
-            original: resource.public_id.split('/').pop(),
-            cloudinary: resource.secure_url,
-            publicId: resource.public_id
-        }));
-    }
-
-    // Function to load all products
+    // Function to load all products from API
     async function loadAllProducts() {
         try {
-            const categories = ['hombre', 'mujer', 'premium'];
-            const promises = categories.map(cat => fetchProductsFromFolder(cat));
-            const results = await Promise.all(promises);
-            categories.forEach((cat, index) => {
-                productsData[cat] = results[index];
-            });
+            const response = await fetch('/api/products');
+            const data = await response.json();
+            if (data.error) {
+                throw new Error(data.error);
+            }
+            productsData = data;
             // Load default category
             renderProducts('hombre');
         } catch (error) {
