@@ -1,7 +1,7 @@
 module.exports = async (req, res) => {
     const CLOUD_NAME = 'dsw8wr69n';
-    const API_KEY = '392983564963296';
-    const API_SECRET = 'fWrqHzclliFQwmG1WisTBMmp-W0';
+    const API_KEY = '812572289299843';
+    const API_SECRET = 'PEJjnRho2F3fnl7ut61MKsYlwSM';
     const auth = Buffer.from(API_KEY + ':' + API_SECRET).toString('base64');
 
     const categories = ['hombre', 'mujer', 'premium'];
