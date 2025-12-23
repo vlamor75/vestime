@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.tab-btn');
     const grid = document.getElementById('products-grid');
 
-    // Intersection Observer for lazy loading
+    // Intersection Observer para lazy loading
     const imageObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -16,24 +16,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let productsData = {};
 
-    // Function to load all products from API
+    // Cargar productos desde el JSON estático cloudinary-urls.json
     async function loadAllProducts() {
         try {
-            const response = await fetch('/api/products');
-            const data = await response.json();
-            if (data.error) {
-                throw new Error(data.error);
+            const response = await fetch('cloudinary-urls.json');
+            if (!response.ok) {
+                throw new Error('No se pudo cargar cloudinary-urls.json');
             }
+            const data = await response.json();
             productsData = data;
-            // Load default category
+            // Categoría por defecto
             renderProducts('hombre');
         } catch (error) {
-            console.error('Error loading products:', error);
-            grid.innerHTML = '<p>Error cargando productos. Inténtalo de nuevo.</p>';
+            console.error('Error loading products from JSON:', error);
+            grid.innerHTML = '<p>Error cargando catálogo. Revisa cloudinary-urls.json.</p>';
         }
     }
 
-    // Function to render products for a category
+    // Pintar productos de una categoría
     function renderProducts(category) {
         grid.innerHTML = '';
         const products = productsData[category] || [];
@@ -53,13 +53,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             grid.appendChild(card);
 
-            // Observe the image for lazy loading
             const img = card.querySelector('img');
             imageObserver.observe(img);
         });
     }
 
-    // Tab event listeners
+    // Tabs de categorías
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             tabs.forEach(t => t.classList.remove('active'));
@@ -69,6 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Load products on page load
+    // Cargar productos al iniciar
     loadAllProducts();
 });
