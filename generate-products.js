@@ -141,14 +141,39 @@ async function generateProducts() {
       });
     });
 
+    // === Generar cloudinary-urls.json para el frontend ===
+    const cloudinaryUrls = {
+      hombre: hombreImages.map(img => ({
+        original: path.basename(img.public_id) + path.extname(img.secure_url),
+        cloudinary: img.secure_url,
+        publicId: img.public_id
+      })),
+      premium: premiumImages.map(img => ({
+        original: path.basename(img.public_id) + path.extname(img.secure_url),
+        cloudinary: img.secure_url,
+        publicId: img.public_id
+      })),
+      mujer: mujerImages.map(img => ({
+        original: path.basename(img.public_id) + path.extname(img.secure_url),
+        cloudinary: img.secure_url,
+        publicId: img.public_id
+      }))
+    };
+
     // Guardar productos.json
-    const outputPath = path.join(__dirname, 'productos.json');
-    fs.writeFileSync(outputPath, JSON.stringify(productos, null, 2));
+    const productosPath = path.join(__dirname, 'productos.json');
+    fs.writeFileSync(productosPath, JSON.stringify(productos, null, 2));
+
+    // Guardar cloudinary-urls.json
+    const cloudinaryUrlsPath = path.join(__dirname, 'cloudinary-urls.json');
+    fs.writeFileSync(cloudinaryUrlsPath, JSON.stringify(cloudinaryUrls, null, 2));
 
     console.log('========================================');
     console.log('✅ PRODUCTOS.JSON GENERADO');
+    console.log('✅ CLOUDINARY-URLS.JSON GENERADO');
     console.log('========================================');
-    console.log(`📄 Archivo: ${outputPath}`);
+    console.log(`📄 productos.json: ${productosPath}`);
+    console.log(`📄 cloudinary-urls.json: ${cloudinaryUrlsPath}`);
     console.log(`📦 Total de productos: ${productos.length}`);
     console.log('\nProductos por categoría:');
     console.log(`  - Hombre Premium: ${productos.filter(p => p.categoria === 'hombre-premium').length}`);
