@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Get data from the embedded JSON
-    const dataScript = document.getElementById('products-data');
-    const productsData = JSON.parse(dataScript.textContent);
-
     const tabs = document.querySelectorAll('.tab-btn');
     const grid = document.getElementById('products-grid');
+
+    // Cloudinary config
+    const CLOUD_NAME = 'dsw8wr69n';
+    const API_KEY = '392983564963296';
+    const API_SECRET = 'fWrqHzclliFQwmG1WisTBMmp-W0';
+    const auth = btoa(API_KEY + ':' + API_SECRET);
 
     // Intersection Observer for lazy loading
     const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -17,6 +19,41 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    let productsData = {};
+
+    // Function to fetch products from Cloudinary folder
+    async function fetchProductsFromFolder(folder) {
+        const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/image?prefix=vestime/${folder}&max_results=500`;
+        const response = await fetch(url, {
+            headers: {
+                'Authorization': 'Basic ' + auth
+            }
+        });
+        const data = await response.json();
+        return data.resources.map(resource => ({
+            original: resource.public_id.split('/').pop(),
+            cloudinary: resource.secure_url,
+            publicId: resource.public_id
+        }));
+    }
+
+    // Function to load all products
+    async function loadAllProducts() {
+        try {
+            const categories = ['hombre', 'mujer', 'premium'];
+            const promises = categories.map(cat => fetchProductsFromFolder(cat));
+            const results = await Promise.all(promises);
+            categories.forEach((cat, index) => {
+                productsData[cat] = results[index];
+            });
+            // Load default category
+            renderProducts('hombre');
+        } catch (error) {
+            console.error('Error loading products:', error);
+            grid.innerHTML = '<p>Error cargando productos. Inténtalo de nuevo.</p>';
+        }
+    }
 
     // Function to render products for a category
     function renderProducts(category) {
@@ -54,6 +91,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Load default category (hombre)
-    renderProducts('hombre');
+    // Load products on page load
+    loadAllProducts();
 });
