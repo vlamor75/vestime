@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
     const CLOUD_NAME = 'dsw8wr69n';
     const API_KEY = '392983564963296';
     const API_SECRET = 'fWrqHzclliFQwmG1WisTBMmp-W0';
@@ -27,4 +27,4 @@ export default async function handler(req, res) {
         console.error('Error fetching products:', error);
         res.status(500).json({ error: 'Error loading products' });
     }
-}
+};

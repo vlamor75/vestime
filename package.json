@@ -1,0 +1,11 @@
+{
+  "name": "vestime",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "echo 'No dev script'",
+    "build": "echo 'No build script'"
+  },
+  "engines": {
+    "node": "18"
+  }
+}
