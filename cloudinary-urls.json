@@ -119,7 +119,12 @@
       "original": "hm010.jpg",
       "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500632/vestime/hombre/hm010.jpg",
       "publicId": "vestime/hombre/hm010"
-    }
+    },
+    {
+  "original": "21_e7whu5.png",
+  "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/21_e7whu5.png",
+  "publicId": "vestime/hombre/21_e7whu5"
+}
   ],
   "premium": [
     {
@@ -473,108 +478,7 @@
       "original": "mbmodel9.jpg",
       "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807405/vestime/mujer/mbmodel9.jpg",
       "publicId": "vestime/mujer/mbmodel9"
-    }
-  ],
-  "root": [
-    {
-      "original": "17_zobsj0.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500407/17_zobsj0.png",
-      "publicId": "17_zobsj0"
     },
-    {
-      "original": "22_rjghtz.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500407/22_rjghtz.png",
-      "publicId": "22_rjghtz"
-    },
-    {
-      "original": "16_qtxdws.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500406/16_qtxdws.png",
-      "publicId": "16_qtxdws"
-    },
-    {
-      "original": "20_kulpnp.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500405/20_kulpnp.png",
-      "publicId": "20_kulpnp"
-    },
-    {
-      "original": "19_g2b5d4.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500403/19_g2b5d4.png",
-      "publicId": "19_g2b5d4"
-    },
-    {
-      "original": "18_ik3f4m.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500403/18_ik3f4m.png",
-      "publicId": "18_ik3f4m"
-    },
-    {
-      "original": "28_mv6ne2.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500403/28_mv6ne2.png",
-      "publicId": "28_mv6ne2"
-    },
-    {
-      "original": "25_bbqjkf.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500403/25_bbqjkf.png",
-      "publicId": "25_bbqjkf"
-    },
-    {
-      "original": "27_vrcmln.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/27_vrcmln.png",
-      "publicId": "27_vrcmln"
-    },
-    {
-      "original": "26_v6bgme.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/26_v6bgme.png",
-      "publicId": "26_v6bgme"
-    },
-    {
-      "original": "23_sjbghd.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/23_sjbghd.png",
-      "publicId": "23_sjbghd"
-    },
-    {
-      "original": "24_n8b94u.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/24_n8b94u.png",
-      "publicId": "24_n8b94u"
-    },
-    {
-      "original": "21_e7whu5.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/21_e7whu5.png",
-      "publicId": "21_e7whu5"
-    },
-    {
-      "original": "main-sample.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765803325/main-sample.png",
-      "publicId": "main-sample"
-    },
-    {
-      "original": "cld-sample-5.jpg",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765803324/cld-sample-5.jpg",
-      "publicId": "cld-sample-5"
-    },
-    {
-      "original": "cld-sample-4.jpg",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765803324/cld-sample-4.jpg",
-      "publicId": "cld-sample-4"
-    },
-    {
-      "original": "cld-sample-3.jpg",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765803324/cld-sample-3.jpg",
-      "publicId": "cld-sample-3"
-    },
-    {
-      "original": "cld-sample-2.jpg",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765803323/cld-sample-2.jpg",
-      "publicId": "cld-sample-2"
-    },
-    {
-      "original": "cld-sample.jpg",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765803322/cld-sample.jpg",
-      "publicId": "cld-sample"
-    },
-    {
-      "original": "sample.jpg",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765803301/sample.jpg",
-      "publicId": "sample"
-    }
+    
   ]
 }
