@@ -16,22 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let productsData = {};
 
-    // Cargar productos desde la API serverless /api/products
+    // Cargar productos desde el JSON estático cloudinary-urls.json
     async function loadAllProducts() {
         try {
-            const response = await fetch('/api/products');
-            const data = await response.json();
-
-            if (!response.ok || data.error) {
-                throw new Error(data.error || 'Respuesta no válida de /api/products');
+            const response = await fetch('cloudinary-urls.json');
+            if (!response.ok) {
+                throw new Error('No se pudo cargar cloudinary-urls.json');
             }
-
+            const data = await response.json();
             productsData = data;
             // Categoría por defecto
             renderProducts('hombre');
         } catch (error) {
-            console.error('Error loading products from API:', error);
-            grid.innerHTML = '<p>Error cargando catálogo. Inténtalo de nuevo más tarde.</p>';
+            console.error('Error loading products from JSON:', error);
+            grid.innerHTML = '<p>Error cargando catálogo. Revisa cloudinary-urls.json.</p>';
         }
     }
 
