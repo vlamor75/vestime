@@ -119,12 +119,7 @@
       "original": "hm010.jpg",
       "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500632/vestime/hombre/hm010.jpg",
       "publicId": "vestime/hombre/hm010"
-    },
-    {
-  "original": "21_e7whu5.png",
-  "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/21_e7whu5.png",
-  "publicId": "vestime/hombre/21_e7whu5"
-}
+    }
   ],
   "premium": [
     {
@@ -478,7 +473,6 @@
       "original": "mbmodel9.jpg",
       "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807405/vestime/mujer/mbmodel9.jpg",
       "publicId": "vestime/mujer/mbmodel9"
-    },
-    
+    }
   ]
 }
