@@ -1,28 +1,63 @@
-module.exports = async (req, res) => {
-    const CLOUD_NAME = 'dsw8wr69n';
-    const API_KEY = '812572289299843';
-    const API_SECRET = 'PEJjnRho2F3fnl7ut61MKsYlwSM';
-    const auth = Buffer.from(API_KEY + ':' + API_SECRET).toString('base64');
+const cloudinary = require('cloudinary').v2;
 
-    const categories = ['hombre', 'mujer', 'premium'];
-    const results = {};
+// Configuración desde variables de entorno en Vercel
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-    try {
-        for (const cat of categories) {
-            const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/resources/image?prefix=vestime/${cat}&max_results=500`;
-            const response = await fetch(url, {
-                headers: {
-                    'Authorization': 'Basic ' + auth
-                }
-            });
-            const data = await response.json();
-            results[cat] = data.resources.map(resource => ({
-                original: resource.public_id.split('/').pop(),
-                cloudinary: resource.secure_url,
-                publicId: resource.public_id
-            }));
+async function getAllImagesFromFolder(prefix) {
+    let allResources = [];
+    let nextCursor = null;
+
+    do {
+        const options = {
+            type: 'upload',
+            prefix,
+            max_results: 500,
+            resource_type: 'image'
+        };
+
+        if (nextCursor) {
+            options.next_cursor = nextCursor;
         }
-        res.status(200).json(results);
+
+        const result = await cloudinary.api.resources(options);
+        allResources = allResources.concat(result.resources || []);
+        nextCursor = result.next_cursor;
+    } while (nextCursor);
+
+    return allResources;
+}
+
+module.exports = async (req, res) => {
+    try {
+        if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+            console.error('Cloudinary env vars missing');
+            return res.status(500).json({ error: 'Cloudinary configuration missing' });
+        }
+
+        // Cargar imágenes por carpeta
+        const [hombreImages, mujerImages, premiumImages] = await Promise.all([
+            getAllImagesFromFolder('vestime/hombre'),
+            getAllImagesFromFolder('vestime/mujer'),
+            getAllImagesFromFolder('vestime/premium')
+        ]);
+
+        const mapImages = (images) => (images || []).map(img => ({
+            original: img.public_id.split('/').pop(),
+            cloudinary: img.secure_url,
+            publicId: img.public_id
+        }));
+
+        const payload = {
+            hombre: mapImages(hombreImages),
+            mujer: mapImages(mujerImages),
+            premium: mapImages(premiumImages)
+        };
+
+        res.status(200).json(payload);
     } catch (error) {
         console.error('Error fetching products:', error);
         res.status(500).json({ error: 'Error loading products' });
