@@ -3,349 +3,515 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Catálogo completo de camisetas Vestime. Diseños únicos para hombre y mujer a precios económicos.">
-
-    <title>Catálogo - Vestime</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./images/favicon.png">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/style.css">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        /* Estilos adicionales para el catálogo */
-        .catalog-header {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 3rem 0 2rem;
-            text-align: center;
-        }
-
-        .filters {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 2rem 0;
-        }
-
-        .filter-btn {
-            padding: 0.75rem 1.5rem;
-            background: white;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-fast);
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: white;
-        }
-
-        .search-box {
-            max-width: 500px;
-            margin: 0 auto 2rem;
-            position: relative;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 1rem 3rem 1rem 1.5rem;
-            border: 2px solid var(--light-gray);
-            border-radius: var(--radius-md);
-            font-size: 1rem;
-            transition: var(--transition-fast);
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .search-box i {
-            position: absolute;
-            right: 1.5rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gray);
-        }
-
-        .catalog-stats {
-            text-align: center;
-            margin: 1rem 0 2rem;
-            color: var(--gray);
-            font-size: 0.95rem;
-        }
-    </style>
+    <title>VESTIME - Catálogo de Camisetas</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-    <!-- === HEADER === -->
-    <header class="header" id="header">
+    <header class="header">
         <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <a href="index.html">VESTIME</a>
-                </div>
-                <nav class="nav">
-                    <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="catalogo.html" class="active">Catálogo</a></li>
-                        <li><a href="index.html#como-funciona">Cómo Funciona</a></li>
-                        <li><a href="index.html#contacto">Contacto</a></li>
-                    </ul>
-                </nav>
-            </div>
+            <h1 class="logo">VESTIME</h1>
+            <p class="subtitle">Catálogo de Camisetas Premium</p>
         </div>
     </header>
 
-    <!-- === CATALOG HEADER === -->
-    <section class="catalog-header">
-        <div class="container">
-            <h1>Catálogo Completo</h1>
-            <p>Descubre todos nuestros diseños únicos y exclusivos</p>
+    <nav class="tabs">
+        <button class="tab-btn active" data-category="hombre">Hombre</button>
+        <button class="tab-btn" data-category="mujer">Mujer</button>
+        <button class="tab-btn" data-category="premium">Hombre Premium</button>
+    </nav>
+
+    <main class="container">
+        <div id="products-grid" class="products-grid">
+            <!-- Products will be loaded here -->
         </div>
-    </section>
+    </main>
 
-    <!-- === FILTROS Y BÚSQUEDA === -->
-    <section class="section">
-        <div class="container">
-
-            <!-- Barra de búsqueda -->
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Buscar por nombre o código..." aria-label="Buscar productos">
-                <i class="fas fa-search"></i>
-            </div>
-
-            <!-- Filtros -->
-            <div class="filters">
-                <button class="filter-btn active" data-filter="all">
-                    <i class="fas fa-th"></i> Todos
-                </button>
-                <button class="filter-btn" data-filter="hombre-premium">
-                    <i class="fas fa-male"></i> Hombre Premium
-                </button>
-                <button class="filter-btn" data-filter="mujer-basic">
-                    <i class="fas fa-female"></i> Mujer Basic
-                </button>
-            </div>
-
-            <!-- Estadísticas -->
-            <div class="catalog-stats" id="catalog-stats">
-                Mostrando <strong id="products-count">0</strong> productos
-            </div>
-
-            <!-- Grid de productos -->
-            <div class="products-grid" id="products-grid">
-                <div class="product-card" style="text-align:center; padding:2rem; box-shadow:none; border:2px dashed var(--light-gray);">
-                    <p style="color: var(--gray);">Cargando catálogo...</p>
-                </div>
-            </div>
-
-            <!-- Mensaje cuando no hay resultados -->
-            <div id="no-results" style="display: none; text-align: center; padding: 3rem 0;">
-                <i class="fas fa-search" style="font-size: 4rem; color: var(--light-gray); margin-bottom: 1rem;"></i>
-                <h3>No se encontraron productos</h3>
-                <p style="color: var(--gray);">Intenta con otra búsqueda o filtro</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Modal Guía de Tallas -->
-    <div class="size-guide-modal" id="size-guide-modal" aria-hidden="true">
-        <div class="size-guide-modal__content">
-            <button class="size-guide-close" aria-label="Cerrar">&times;</button>
-            <h3 style="margin-bottom: 0.5rem;">Guía completa de tallas (cm)</h3>
-            <p style="color: var(--gray); margin-bottom: 1rem;">Selecciona una categoría y revisa las medidas.</p>
-            <div class="size-guide-tabs">
-                <button type="button" data-size-guide-tab="hombre" class="active">Hombre</button>
-                <button type="button" data-size-guide-tab="mujer">Mujer</button>
-            </div>
-            <div class="size-guide-table-wrapper">
-                <table class="size-guide-table">
-                    <thead>
-                        <tr>
-                            <th>Talla</th>
-                            <th>Hombro</th>
-                            <th>Pecho</th>
-                            <th>Manga</th>
-                            <th>Largo</th>
-                        </tr>
-                    </thead>
-                    <tbody id="size-guide-table-body">
-                        <tr><td colspan="5">Cargando tallas...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- === CTA === -->
-    <section class="section" style="background: var(--light-gray); text-align: center;">
-        <div class="container">
-            <h2>¿No encontraste lo que buscabas?</h2>
-            <p style="color: var(--gray); margin: 1rem 0 2rem;">Contáctanos por WhatsApp y te ayudamos a encontrar tu camiseta perfecta</p>
-            <a href="#" class="btn btn-primary btn-lg" data-whatsapp data-mensaje="Hola! Busco un diseño específico 🔍">
-                <i class="fab fa-whatsapp"></i> Consultar Disponibilidad
-            </a>
-        </div>
-    </section>
-
-    <!-- === FOOTER === -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="logo" style="font-size: 2rem; margin-bottom: 1rem; color: white;">
-                    VESTIME
-                </div>
-                <p style="opacity: 0.9; margin-bottom: 1.5rem;">
-                    Camisetas únicas y económicas para expresar tu estilo.
-                </p>
-
-                <div class="social-links">
-                   
-                    <a href="#" data-whatsapp data-mensaje="Hola! Tengo una consulta" aria-label="WhatsApp">
-                        <i class="fab fa-whatsapp"></i>
-                    </a>
-                </div>
-
-                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2); opacity: 0.8; font-size: 0.875rem;">
-                    <p>© 2025 Vestime - Todos los derechos reservados</p>
-                    <p style="margin-top: 0.5rem;">Hecho con ❤️ en Colombia</p>
-                </div>
-            </div>
+            <p>&copy; 2025 VESTIME. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- === BOTÓN FLOTANTE DE WHATSAPP === -->
-    <a href="#" class="whatsapp-float" data-whatsapp data-mensaje="Hola! Tengo una consulta sobre el catálogo 👕" aria-label="Contactar por WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- === SCRIPTS === -->
-    <script src="./js/config.js"></script>
-    <script src="./js/referidos.js"></script>
-    <script src="./js/productos.js"></script>
-    <script src="./js/size-guide.js"></script>
-
-    <!-- Script de filtros y búsqueda -->
-    <script>
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const searchInput = document.getElementById('search-input');
-        const noResults = document.getElementById('no-results');
-        const productsCount = document.getElementById('products-count');
-        const productsGrid = document.getElementById('products-grid');
-
-        let currentFilter = 'all';
-        let searchTerm = '';
-
-        function crearTarjetaGuia() {
-            return `
-                <div class="product-card size-guide-card" aria-label="Guía de tallas">
-                    <div class="product-image" style="cursor: default;">
-                        <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width: 70%; height: 70%;">
-                            <path d="M40 60 L80 40 H140 L180 60 L170 200 H50 Z" fill="rgba(255,255,255,0.15)" stroke="#fff" stroke-width="4" stroke-linejoin="round" />
-                            <line x1="40" y1="60" x2="180" y2="60" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
-                            <line x1="60" y1="110" x2="160" y2="110" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
-                            <line x1="100" y1="60" x2="100" y2="200" stroke="#FFE66D" stroke-dasharray="6" stroke-width="3" />
-                            <line x1="60" y1="70" x2="60" y2="180" stroke="#FFE66D" stroke-dasharray="5" stroke-width="3" />
-                        </svg>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name" style="color: white;">Guía de Tallas</h3>
-                        <p class="product-description" style="color: rgba(255,255,255,0.85);">
-                            Consulta las medidas por talla para Hombre y Mujer.
-                        </p>
-                        <button class="btn btn-white btn-block" type="button" onclick="openSizeGuide()" style="color: var(--primary);">
-                            <i class="fas fa-ruler-combined"></i> Ver tabla completa
-                        </button>
-                    </div>
-                </div>`;
+    <script type="application/json" id="products-data">
+    {
+      "hombre": [
+        {
+          "original": "hbmdel16.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807372/vestime/hombre/hbmdel16.jpg",
+          "publicId": "vestime/hombre/hbmdel16"
+        },
+        {
+          "original": "hbmodel1.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807374/vestime/hombre/hbmodel1.jpg",
+          "publicId": "vestime/hombre/hbmodel1"
+        },
+        {
+          "original": "hbmodel10.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807376/vestime/hombre/hbmodel10.jpg",
+          "publicId": "vestime/hombre/hbmodel10"
+        },
+        {
+          "original": "hbmodel11.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807377/vestime/hombre/hbmodel11.jpg",
+          "publicId": "vestime/hombre/hbmodel11"
+        },
+        {
+          "original": "hbmodel14.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807378/vestime/hombre/hbmodel14.jpg",
+          "publicId": "vestime/hombre/hbmodel14"
+        },
+        {
+          "original": "hbmodel15.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807379/vestime/hombre/hbmodel15.jpg",
+          "publicId": "vestime/hombre/hbmodel15"
+        },
+        {
+          "original": "hbmodel2.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807380/vestime/hombre/hbmodel2.jpg",
+          "publicId": "vestime/hombre/hbmodel2"
+        },
+        {
+          "original": "hbmodel3.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807382/vestime/hombre/hbmodel3.jpg",
+          "publicId": "vestime/hombre/hbmodel3"
+        },
+        {
+          "original": "hbmodel4.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807383/vestime/hombre/hbmodel4.jpg",
+          "publicId": "vestime/hombre/hbmodel4"
+        },
+        {
+          "original": "hbmodel5.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807384/vestime/hombre/hbmodel5.jpg",
+          "publicId": "vestime/hombre/hbmodel5"
+        },
+        {
+          "original": "hbmodel6.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807386/vestime/hombre/hbmodel6.jpg",
+          "publicId": "vestime/hombre/hbmodel6"
+        },
+        {
+          "original": "hbmodel7.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807387/vestime/hombre/hbmodel7.jpg",
+          "publicId": "vestime/hombre/hbmodel7"
+        },
+        {
+          "original": "hbmodel8.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807388/vestime/hombre/hbmodel8.jpg",
+          "publicId": "vestime/hombre/hbmodel8"
+        },
+        {
+          "original": "hbmodel9.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807390/vestime/hombre/hbmodel9.jpg",
+          "publicId": "vestime/hombre/hbmodel9"
+        },
+        {
+          "original": "hm001.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500623/vestime/hombre/hm001.jpg",
+          "publicId": "vestime/hombre/hm001"
+        },
+        {
+          "original": "hm002.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500624/vestime/hombre/hm002.jpg",
+          "publicId": "vestime/hombre/hm002"
+        },
+        {
+          "original": "hm003.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500626/vestime/hombre/hm003.jpg",
+          "publicId": "vestime/hombre/hm003"
+        },
+        {
+          "original": "hm004.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500627/vestime/hombre/hm004.jpg",
+          "publicId": "vestime/hombre/hm004"
+        },
+        {
+          "original": "hm005.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500628/vestime/hombre/hm005.jpg",
+          "publicId": "vestime/hombre/hm005"
+        },
+        {
+          "original": "hm006.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500629/vestime/hombre/hm006.jpg",
+          "publicId": "vestime/hombre/hm006"
+        },
+        {
+          "original": "hm007.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500630/vestime/hombre/hm007.jpg",
+          "publicId": "vestime/hombre/hm007"
+        },
+        {
+          "original": "hm008.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500630/vestime/hombre/hm008.jpg",
+          "publicId": "vestime/hombre/hm008"
+        },
+        {
+          "original": "hm009.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500631/vestime/hombre/hm009.jpg",
+          "publicId": "vestime/hombre/hm009"
+        },
+        {
+          "original": "hm010.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500632/vestime/hombre/hm010.jpg",
+          "publicId": "vestime/hombre/hm010"
         }
-
-        function updateUI(products) {
-            productsCount.textContent = products.length;
-
-            if (products.length === 0) {
-                noResults.style.display = 'block';
-                productsGrid.innerHTML = '';
-                return;
-            }
-
-            noResults.style.display = 'none';
-            const productosHTML = products.map(p => window.productosManager.generarProductoHTML(p)).join('');
-            productsGrid.innerHTML = productosHTML + crearTarjetaGuia();
-
-            if (window.sistemaReferidos) {
-                window.sistemaReferidos.actualizarBotonesWhatsApp();
-            }
-            if (window.productosManager && typeof window.productosManager.inicializarZoom === 'function') {
-                window.productosManager.inicializarZoom();
-            }
+      ],
+      "mujer": [
+        {
+          "original": "mb1.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808169/vestime/mujer/mb1.jpg",
+          "publicId": "vestime/mujer/mb1"
+        },
+        {
+          "original": "mb10.png",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808172/vestime/mujer/mb10.png",
+          "publicId": "vestime/mujer/mb10"
+        },
+        {
+          "original": "mb11.png",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808174/vestime/mujer/mb11.png",
+          "publicId": "vestime/mujer/mb11"
+        },
+        {
+          "original": "mb12.png",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808175/vestime/mujer/mb12.png",
+          "publicId": "vestime/mujer/mb12"
+        },
+        {
+          "original": "mb2.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808176/vestime/mujer/mb2.jpg",
+          "publicId": "vestime/mujer/mb2"
+        },
+        {
+          "original": "mb3.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808182/vestime/mujer/mb3.jpg",
+          "publicId": "vestime/mujer/mb3"
+        },
+        {
+          "original": "mb4.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808184/vestime/mujer/mb4.jpg",
+          "publicId": "vestime/mujer/mb4"
+        },
+        {
+          "original": "mb5.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808186/vestime/mujer/mb5.jpg",
+          "publicId": "vestime/mujer/mb5"
+        },
+        {
+          "original": "mb6.png",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808188/vestime/mujer/mb6.png",
+          "publicId": "vestime/mujer/mb6"
+        },
+        {
+          "original": "mb7.png",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808189/vestime/mujer/mb7.png",
+          "publicId": "vestime/mujer/mb7"
+        },
+        {
+          "original": "mb8.png",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808192/vestime/mujer/mb8.png",
+          "publicId": "vestime/mujer/mb8"
+        },
+        {
+          "original": "mb9.png",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808192/vestime/mujer/mb9.png",
+          "publicId": "vestime/mujer/mb9"
+        },
+        {
+          "original": "mbmodel1.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807392/vestime/mujer/mbmodel1.jpg",
+          "publicId": "vestime/mujer/mbmodel1"
+        },
+        {
+          "original": "mbmodel10.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807394/vestime/mujer/mbmodel10.jpg",
+          "publicId": "vestime/mujer/mbmodel10"
+        },
+        {
+          "original": "mbmodel2.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807396/vestime/mujer/mbmodel2.jpg",
+          "publicId": "vestime/mujer/mbmodel2"
+        },
+        {
+          "original": "mbmodel3.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807397/vestime/mujer/mbmodel3.jpg",
+          "publicId": "vestime/mujer/mbmodel3"
+        },
+        {
+          "original": "mbmodel4.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807399/vestime/mujer/mbmodel4.jpg",
+          "publicId": "vestime/mujer/mbmodel4"
+        },
+        {
+          "original": "mbmodel5.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807401/vestime/mujer/mbmodel5.jpg",
+          "publicId": "vestime/mujer/mbmodel5"
+        },
+        {
+          "original": "mbmodel6.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807402/vestime/mujer/mbmodel6.jpg",
+          "publicId": "vestime/mujer/mbmodel6"
+        },
+        {
+          "original": "mbmodel7.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807403/vestime/mujer/mbmodel7.jpg",
+          "publicId": "vestime/mujer/mbmodel7"
+        },
+        {
+          "original": "mbmodel8.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807404/vestime/mujer/mbmodel8.jpg",
+          "publicId": "vestime/mujer/mbmodel8"
+        },
+        {
+          "original": "mbmodel9.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807405/vestime/mujer/mbmodel9.jpg",
+          "publicId": "vestime/mujer/mbmodel9"
         }
-
-        function filtrarProductos() {
-            let productos = window.productosManager.productos || [];
-
-            if (currentFilter !== 'all') {
-                productos = productos.filter(p => p.categoria === currentFilter);
-            }
-
-            if (searchTerm) {
-                const term = searchTerm.toLowerCase();
-                productos = productos.filter(p =>
-                    p.nombre.toLowerCase().includes(term) ||
-                    p.descripcion.toLowerCase().includes(term) ||
-                    p.id.toLowerCase().includes(term)
-                );
-            }
-
-            updateUI(productos);
+      ],
+      "premium": [
+        {
+          "original": "1000682185 - copia.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807406/vestime/premium/1000682185%20-%20copia.jpg",
+          "publicId": "vestime/premium/1000682185 - copia"
+        },
+        {
+          "original": "1000682195 - copia.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807407/vestime/premium/1000682195%20-%20copia.jpg",
+          "publicId": "vestime/premium/1000682195 - copia"
+        },
+        {
+          "original": "hp001.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807409/vestime/premium/hp001.jpg",
+          "publicId": "vestime/premium/hp001"
+        },
+        {
+          "original": "hp002.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807410/vestime/premium/hp002.jpg",
+          "publicId": "vestime/premium/hp002"
+        },
+        {
+          "original": "hp003.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807412/vestime/premium/hp003.jpg",
+          "publicId": "vestime/premium/hp003"
+        },
+        {
+          "original": "hp004.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807414/vestime/premium/hp004.jpg",
+          "publicId": "vestime/premium/hp004"
+        },
+        {
+          "original": "hp005.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807416/vestime/premium/hp005.jpg",
+          "publicId": "vestime/premium/hp005"
+        },
+        {
+          "original": "hp006.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807417/vestime/premium/hp006.jpg",
+          "publicId": "vestime/premium/hp006"
+        },
+        {
+          "original": "hp007.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807420/vestime/premium/hp007.jpg",
+          "publicId": "vestime/premium/hp007"
+        },
+        {
+          "original": "hp008.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807423/vestime/premium/hp008.jpg",
+          "publicId": "vestime/premium/hp008"
+        },
+        {
+          "original": "hp009.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807428/vestime/premium/hp009.jpg",
+          "publicId": "vestime/premium/hp009"
+        },
+        {
+          "original": "hp010.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807432/vestime/premium/hp010.jpg",
+          "publicId": "vestime/premium/hp010"
+        },
+        {
+          "original": "hp0model8.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808211/vestime/premium/hp0model8.jpg",
+          "publicId": "vestime/premium/hp0model8"
+        },
+        {
+          "original": "hp1.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807436/vestime/premium/hp1.jpg",
+          "publicId": "vestime/premium/hp1"
+        },
+        {
+          "original": "hp14.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807440/vestime/premium/hp14.jpg",
+          "publicId": "vestime/premium/hp14"
+        },
+        {
+          "original": "hp18.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807441/vestime/premium/hp18.jpg",
+          "publicId": "vestime/premium/hp18"
+        },
+        {
+          "original": "hp19.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807443/vestime/premium/hp19.jpg",
+          "publicId": "vestime/premium/hp19"
+        },
+        {
+          "original": "hp2.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807446/vestime/premium/hp2.jpg",
+          "publicId": "vestime/premium/hp2"
+        },
+        {
+          "original": "hp20.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807448/vestime/premium/hp20.jpg",
+          "publicId": "vestime/premium/hp20"
+        },
+        {
+          "original": "hp21.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807449/vestime/premium/hp21.jpg",
+          "publicId": "vestime/premium/hp21"
+        },
+        {
+          "original": "hp22.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807452/vestime/premium/hp22.jpg",
+          "publicId": "vestime/premium/hp22"
+        },
+        {
+          "original": "hp23.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807453/vestime/premium/hp23.jpg",
+          "publicId": "vestime/premium/hp23"
+        },
+        {
+          "original": "hp24.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807455/vestime/premium/hp24.jpg",
+          "publicId": "vestime/premium/hp24"
+        },
+        {
+          "original": "hp25.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807457/vestime/premium/hp25.jpg",
+          "publicId": "vestime/premium/hp25"
+        },
+        {
+          "original": "hp26.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807459/vestime/premium/hp26.jpg",
+          "publicId": "vestime/premium/hp26"
+        },
+        {
+          "original": "hp3.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807462/vestime/premium/hp3.jpg",
+          "publicId": "vestime/premium/hp3"
+        },
+        {
+          "original": "hp4.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807465/vestime/premium/hp4.jpg",
+          "publicId": "vestime/premium/hp4"
+        },
+        {
+          "original": "hp5.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808223/vestime/premium/hp5.jpg",
+          "publicId": "vestime/premium/hp5"
+        },
+        {
+          "original": "hp6.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808225/vestime/premium/hp6.jpg",
+          "publicId": "vestime/premium/hp6"
+        },
+        {
+          "original": "hp7.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808227/vestime/premium/hp7.jpg",
+          "publicId": "vestime/premium/hp7"
+        },
+        {
+          "original": "hpmodel1.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808229/vestime/premium/hpmodel1.jpg",
+          "publicId": "vestime/premium/hpmodel1"
+        },
+        {
+          "original": "hpmodel10.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808231/vestime/premium/hpmodel10.jpg",
+          "publicId": "vestime/premium/hpmodel10"
+        },
+        {
+          "original": "hpmodel11.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808233/vestime/premium/hpmodel11.jpg",
+          "publicId": "vestime/premium/hpmodel11"
+        },
+        {
+          "original": "hpmodel12.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808234/vestime/premium/hpmodel12.jpg",
+          "publicId": "vestime/premium/hpmodel12"
+        },
+        {
+          "original": "hpmodel13.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808236/vestime/premium/hpmodel13.jpg",
+          "publicId": "vestime/premium/hpmodel13"
+        },
+        {
+          "original": "hpmodel14.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808237/vestime/premium/hpmodel14.jpg",
+          "publicId": "vestime/premium/hpmodel14"
+        },
+        {
+          "original": "hpmodel15.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808239/vestime/premium/hpmodel15.jpg",
+          "publicId": "vestime/premium/hpmodel15"
+        },
+        {
+          "original": "hpmodel16.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808240/vestime/premium/hpmodel16.jpg",
+          "publicId": "vestime/premium/hpmodel16"
+        },
+        {
+          "original": "hpmodel17.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808242/vestime/premium/hpmodel17.jpg",
+          "publicId": "vestime/premium/hpmodel17"
+        },
+        {
+          "original": "hpmodel18.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808244/vestime/premium/hpmodel18.jpg",
+          "publicId": "vestime/premium/hpmodel18"
+        },
+        {
+          "original": "hpmodel2.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808246/vestime/premium/hpmodel2.jpg",
+          "publicId": "vestime/premium/hpmodel2"
+        },
+        {
+          "original": "hpmodel3.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808248/vestime/premium/hpmodel3.jpg",
+          "publicId": "vestime/premium/hpmodel3"
+        },
+        {
+          "original": "hpmodel4.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808249/vestime/premium/hpmodel4.jpg",
+          "publicId": "vestime/premium/hpmodel4"
+        },
+        {
+          "original": "hpmodel5.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808251/vestime/premium/hpmodel5.jpg",
+          "publicId": "vestime/premium/hpmodel5"
+        },
+        {
+          "original": "hpmodel6.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808252/vestime/premium/hpmodel6.jpg",
+          "publicId": "vestime/premium/hpmodel6"
+        },
+        {
+          "original": "hpmodel7.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808253/vestime/premium/hpmodel7.jpg",
+          "publicId": "vestime/premium/hpmodel7"
+        },
+        {
+          "original": "hpmodel8.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808254/vestime/premium/hpmodel8.jpg",
+          "publicId": "vestime/premium/hpmodel8"
+        },
+        {
+          "original": "hpmodel9.jpg",
+          "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765808256/vestime/premium/hpmodel9.jpg",
+          "publicId": "vestime/premium/hpmodel9"
         }
-
-        async function iniciarCatalogo() {
-            await window.productosManager.cargarProductos();
-            filtrarProductos();
-        }
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentFilter = btn.dataset.filter;
-                filtrarProductos();
-            });
-        });
-
-        searchInput.addEventListener('input', (e) => {
-            searchTerm = e.target.value.trim();
-            filtrarProductos();
-        });
-
-        iniciarCatalogo();
-
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
+      ]
+    }
     </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
