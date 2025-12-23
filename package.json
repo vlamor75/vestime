@@ -6,6 +6,6 @@
     "build": "echo 'No build script'"
   },
   "engines": {
-    "node": "18"
+    "node": "24.x"
   }
 }
