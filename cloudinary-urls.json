@@ -1,6 +1,11 @@
 {
   "hombre": [
     {
+      "original": "21_e7whu5.png",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/21_e7whu5.png",
+      "publicId": "21_e7whu5"
+    },
+    {
       "original": "hbmdel16.jpg",
       "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1765807372/vestime/hombre/hbmdel16.jpg",
       "publicId": "vestime/hombre/hbmdel16"
@@ -116,14 +121,44 @@
       "publicId": "vestime/hombre/hm009"
     },
     {
+      "original": "hm009.jpg",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1767637531/vestime/hombre/vestime/hombre/hm009.jpg",
+      "publicId": "vestime/hombre/vestime/hombre/hm009"
+    },
+    {
       "original": "hm010.jpg",
       "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500632/vestime/hombre/hm010.jpg",
       "publicId": "vestime/hombre/hm010"
     },
     {
-      "original": "21_e7whu5.png",
-      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1766500402/21_e7whu5.png",
-      "publicId": "21_e7whu5"
+      "original": "hm010.jpg",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1767637533/vestime/hombre/vestime/hombre/hm010.jpg",
+      "publicId": "vestime/hombre/vestime/hombre/hm010"
+    },
+    {
+      "original": "hm011.jpg",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1767637534/vestime/hombre/vestime/hombre/hm011.jpg",
+      "publicId": "vestime/hombre/vestime/hombre/hm011"
+    },
+    {
+      "original": "hm012.jpg",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1767637534/vestime/hombre/vestime/hombre/hm012.jpg",
+      "publicId": "vestime/hombre/vestime/hombre/hm012"
+    },
+    {
+      "original": "hm013.jpg",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1767637536/vestime/hombre/vestime/hombre/hm013.jpg",
+      "publicId": "vestime/hombre/vestime/hombre/hm013"
+    },
+    {
+      "original": "hm014.jpg",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1767637537/vestime/hombre/vestime/hombre/hm014.jpg",
+      "publicId": "vestime/hombre/vestime/hombre/hm014"
+    },
+    {
+      "original": "hm015.jpg",
+      "cloudinary": "https://res.cloudinary.com/dsw8wr69n/image/upload/v1767637538/vestime/hombre/vestime/hombre/hm015.jpg",
+      "publicId": "vestime/hombre/vestime/hombre/hm015"
     }
   ],
   "premium": [
